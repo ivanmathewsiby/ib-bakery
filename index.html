@@ -2,13 +2,13 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Indian Bakery | Thodupuzha's Finest Bakes & Cakes</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <script>
@@ -16,1067 +16,681 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            light:   '#fdf3e8',
-                            mist:    '#faebd7',
-                            DEFAULT: '#c2600a', // The Logo Orange
-                            warm:    '#d4700f',
-                            dark:    '#8b3d06',
-                            copper:  '#b5570c',
-                            cream:   '#ffffff',
-                            parchment: '#f0e4d0',
-                        }
+                        brand: { DEFAULT: '#FF8B2C', hover: '#E67A20' },
+                        whatsapp: '#25D366'
                     },
                     fontFamily: {
-                        serif:   ['"Playfair Display"', 'serif'],
+                        serif: ['"Playfair Display"', 'serif'],
                         elegant: ['"Cormorant Garamond"', 'serif'],
-                        sans:    ['"Poppins"', 'sans-serif'],
+                        sans: ['"Poppins"', 'sans-serif'],
                     },
-                    letterSpacing: {
-                        luxury: '0.18em',
-                        wide:   '0.08em',
-                    }
                 }
             }
         }
     </script>
 
     <style>
-        /* =============================================
-           PRELOADER
-        ============================================= */
-        #preloader {
-            position: fixed; inset: 0; z-index: 9999;
-            background: #ffffff; display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            transition: opacity 0.8s cubic-bezier(0.4,0,0.2,1), visibility 0.8s;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        #preloader.fade-out { opacity: 0; visibility: hidden; }
-        .preloader-ring {
-            width: 72px; height: 72px; border-radius: 50%;
-            border: 2px solid rgba(194,96,10,0.15); border-top-color: #c2600a;
-            animation: spin 1.2s cubic-bezier(0.6,0.2,0.4,0.8) infinite; margin-bottom: 28px;
+        html {
+            scroll-behavior: smooth;
         }
-        .preloader-ring-inner {
-            width: 48px; height: 48px; border-radius: 50%;
-            border: 1.5px solid rgba(194,96,10,0.10); border-bottom-color: #c2600a;
-            animation: spin-reverse 1.8s cubic-bezier(0.6,0.2,0.4,0.8) infinite;
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-        }
-        .preloader-rings {
-            position: relative; display: flex; align-items: center;
-            justify-content: center; width: 72px; height: 72px; margin-bottom: 28px;
-        }
-        @keyframes spin         { to { transform: rotate(360deg); } }
-        @keyframes spin-reverse { to { transform: rotate(-360deg); } }
-        .preloader-dot {
-            width: 5px; height: 5px; border-radius: 50%;
-            background: #c2600a; opacity: 0; animation: dot-pulse 1.6s ease-in-out infinite;
-        }
-        .preloader-dot:nth-child(2) { animation-delay: 0.3s; }
-        .preloader-dot:nth-child(3) { animation-delay: 0.6s; }
-        @keyframes dot-pulse {
-            0%,80%,100% { opacity: 0.15; transform: scale(0.8); }
-            40%         { opacity: 1; transform: scale(1); }
-        }
-
-        /* =============================================
-           BASE
-        ============================================= */
-        *, *::before, *::after { box-sizing: border-box; }
-        html { font-size: 16px; }
-
         body {
-            background-color: #ffffff; /* Pure white background */
-            color: #c2600a; /* Exact logo orange text */
+            background: #FAFAFA;
+            color: #1a1a1a;
+            overflow-x: hidden;
+        }
+        ::selection {
+            background: #FF8B2C;
+            color: white;
         }
 
-        .font-display { font-family: 'Cormorant Garamond', serif; }
+        /* PREMIUM PRELOADER */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        #preloader.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .preloader-logo {
+            width: 140px;
+            height: auto;
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeInLogo 1s ease forwards 0.2s;
+        }
+        .preloader-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            color: #666;
+            letter-spacing: 0.2em;
+            opacity: 0;
+            animation: fadeInLogo 1s ease forwards 0.6s;
+        }
+        .loading-line {
+            width: 0;
+            height: 1px;
+            background: #FF8B2C;
+            margin-top: 20px;
+            animation: expandLine 2s cubic-bezier(0.77, 0, 0.175, 1) forwards 0.4s;
+        }
+        @keyframes fadeInLogo {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes expandLine {
+            0% { width: 0; opacity: 0; }
+            50% { opacity: 1; }
+            100% { width: 120px; opacity: 0; }
+        }
 
-        /* =============================================
-           GLASS NAV
-        ============================================= */
+        /* PREMIUM NAVBAR */
         .glass-nav {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(18px) saturate(1.4);
-            -webkit-backdrop-filter: blur(18px) saturate(1.4);
-            box-shadow: 0 1px 0 rgba(194,96,10,0.12), 0 8px 32px rgba(194,96,10,0.06);
-            border-bottom: 1px solid rgba(194,96,10,0.12);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px) saturate(1.2);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+            transition: all 0.4s ease;
         }
-
-        /* =============================================
-           GLASSMORPHISM BUTTONS  
-        ============================================= */
-        .btn-glass {
-            position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-            padding: 0.65rem 1.75rem; border-radius: 9999px; font-family: 'Poppins', sans-serif;
-            font-weight: 600; font-size: 0.875rem; letter-spacing: 0.07em; text-decoration: none;
-            color: #fff; background: rgba(194,96,10,0.75); backdrop-filter: blur(14px) saturate(1.5);
-            -webkit-backdrop-filter: blur(14px) saturate(1.5); border: 1px solid rgba(255,255,255,0.35);
-            box-shadow: 0 2px 16px rgba(194,96,10,0.25), 0 0 0 1px rgba(194,96,10,0.12) inset, 0 1px 0 rgba(255,255,255,0.25) inset;
-            transition: all 0.32s cubic-bezier(0.34,1.56,0.64,1); cursor: pointer; overflow: hidden;
+        .glass-nav.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding-top: 0.75rem !important;
+            padding-bottom: 0.75rem !important;
         }
-        .btn-glass::before {
-            content: ''; position: absolute; inset: 0; border-radius: inherit;
-            background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 60%); pointer-events: none;
-        }
-        .btn-glass:hover {
-            transform: translateY(-3px) scale(1.04);
-            box-shadow: 0 8px 28px rgba(194,96,10,0.35), 0 0 0 1px rgba(194,96,10,0.2) inset, 0 1px 0 rgba(255,255,255,0.3) inset;
-            background: rgba(194,96,10,0.9); letter-spacing: 0.10em;
-        }
-
-        .btn-glass-outline {
-            position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-            padding: 0.65rem 1.75rem; border-radius: 9999px; font-family: 'Poppins', sans-serif; font-weight: 600;
-            font-size: 0.875rem; letter-spacing: 0.07em; text-decoration: none; color: #c2600a;
-            background: rgba(255,255,255,0.8); backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4);
-            border: 1px solid rgba(194,96,10,0.35); box-shadow: 0 2px 12px rgba(194,96,10,0.10), 0 0 0 1px rgba(255,255,255,0.3) inset;
-            transition: all 0.32s cubic-bezier(0.34,1.56,0.64,1); cursor: pointer; overflow: hidden;
-        }
-        .btn-glass-outline::before {
-            content: ''; position: absolute; inset: 0; border-radius: inherit;
-            background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 60%); pointer-events: none;
-        }
-        .btn-glass-outline:hover {
-            transform: translateY(-3px) scale(1.04); background: rgba(194,96,10,0.10);
-            border-color: rgba(194,96,10,0.55); box-shadow: 0 8px 24px rgba(194,96,10,0.18);
-            letter-spacing: 0.10em; color: #c2600a;
-        }
-
-        .btn-glass-sm { padding: 0.45rem 1.3rem; font-size: 0.82rem; }
-
-        .btn-glass-arrow {
-            position: relative; display: inline-flex; align-items: center; justify-content: center;
-            width: 44px; height: 44px; border-radius: 50%; color: #c2600a; background: rgba(255,255,255,0.9);
-            backdrop-filter: blur(14px) saturate(1.4); -webkit-backdrop-filter: blur(14px) saturate(1.4);
-            border: 1px solid rgba(194,96,10,0.28); box-shadow: 0 2px 14px rgba(194,96,10,0.12), 0 1px 0 rgba(255,255,255,0.5) inset;
-            transition: all 0.32s cubic-bezier(0.34,1.56,0.64,1); cursor: pointer; overflow: hidden; font-size: 1.1rem; font-weight: 600;
-        }
-        .btn-glass-arrow::before {
-            content: ''; position: absolute; inset: 0; border-radius: 50%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 60%); pointer-events: none;
-        }
-        .btn-glass-arrow:hover {
-            transform: translateY(-2px) scale(1.1); background: rgba(194,96,10,0.75); color: #fff;
-            border-color: rgba(255,255,255,0.35); box-shadow: 0 6px 22px rgba(194,96,10,0.30);
-        }
-
-        /* =============================================
-           CARDS & SECTIONS
-        ============================================= */
-        .hero-overlay {
-            background: linear-gradient(105deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.85) 45%, rgba(255,255,255,0.4) 75%, rgba(255,255,255,0.1) 100%);
-        }
-        
-        .page-hero {
-            background: linear-gradient(135deg, rgba(194,96,10,0.05) 0%, #ffffff 60%);
-            border-bottom: 1px solid rgba(194,96,10,0.10);
-        }
-
-        .matte-card, .cake-card, .dessert-card {
-            background: rgba(255,255,255,0.85); backdrop-filter: blur(8px);
-            border: 1px solid rgba(194,96,10,0.15); box-shadow: 0 4px 24px rgba(194,96,10,0.07), 0 1px 0 rgba(255,255,255,0.65) inset;
-            transition: box-shadow 0.35s ease, transform 0.35s ease;
-        }
-        .matte-card:hover, .cake-card:hover, .dessert-card:hover {
-            box-shadow: 0 12px 40px rgba(194,96,10,0.13), 0 1px 0 rgba(255,255,255,0.7) inset; transform: translateY(-4px);
-        }
-
-        /* =============================================
-           FLOATING WHATSAPP
-        ============================================= */
-        .wa-float {
-            background: rgba(37,211,102,0.65); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.40);
-            box-shadow: 0 4px 24px rgba(37,211,102,0.35), 0 1px 0 rgba(255,255,255,0.3) inset;
-            transition: all 0.32s cubic-bezier(0.34,1.56,0.64,1);
-        }
-        .wa-float:hover {
-            transform: translateY(-4px) scale(1.06); box-shadow: 0 10px 36px rgba(37,211,102,0.45); letter-spacing: 0.05em;
-        }
-        .wa-float .wa-label {
-            background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border: 1px solid rgba(194,96,10,0.18);
-        }
-
-        /* =============================================
-           NAV LINKS
-        ============================================= */
         .nav-link {
-            position: relative; font-weight: 500; font-size: 0.875rem; cursor: pointer;
-            letter-spacing: 0.06em; color: #c2600a; text-decoration: none;
-            transition: color 0.22s ease, letter-spacing 0.28s ease;
+            position: relative;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            letter-spacing: 0.05em;
+            color: #333333;
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #FF8B2C;
         }
         .nav-link::after {
-            content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1.5px;
-            background: #c2600a; border-radius: 2px; transition: width 0.3s ease;
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #FF8B2C;
+            border-radius: 4px;
+            transition: width 0.3s ease;
         }
-        .nav-link:hover { color: #c2600a; letter-spacing: 0.10em; }
-        .nav-link:hover::after { width: 100%; }
-
-        /* =============================================
-           IMAGE ZOOM
-        ============================================= */
-        .image-zoom img { transition: transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94); }
-        .image-zoom:hover img { transform: scale(1.07); }
-
-        /* =============================================
-           FADE IN ANIMATIONS
-        ============================================= */
-        .fade-in-up { animation: fadeInUp 0.9s cubic-bezier(0.22,1,0.36,1) forwards; opacity: 0; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
-        .fade-delay-1 { animation-delay: 0.15s; }
-        .fade-delay-2 { animation-delay: 0.32s; }
-        .fade-delay-3 { animation-delay: 0.50s; }
-
-        /* =============================================
-           SCROLL UTILITIES (OPTIMIZED FOR NATIVE SWIPE)
-        ============================================= */
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .scroll-container-wrap { position: relative; }
-        .scroll-container-wrap::before, .scroll-container-wrap::after {
-            content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 5; pointer-events: none;
+        .nav-link:hover::after {
+            width: 100%;
         }
-        .scroll-container-wrap::before { left: 0; background: linear-gradient(to right, #ffffff, transparent); }
-        .scroll-container-wrap::after  { right: 0; background: linear-gradient(to left, #ffffff, transparent); }
         
-        /* Fixed scroll class to use CSS native snapping instead of JS loop */
-        .scroll-content { 
-            overflow-x: auto; 
-            scroll-snap-type: x mandatory; 
+        /* BUTTONS */
+        .btn-solid {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.8rem 2rem;
+            border-radius: 9999px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            color: white;
+            background: #FF8B2C;
+            box-shadow: 0 4px 15px rgba(255, 139, 44, 0.25);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            cursor: pointer;
+            border: none;
+        }
+        .btn-solid:hover {
+            background: #E67A20;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 139, 44, 0.35);
+        }
+        .btn-outline-white {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.8rem 2rem;
+            border-radius: 9999px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            color: white;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .btn-outline-white:hover {
+            background: white;
+            color: #1a1a1a;
+            transform: translateY(-2px);
+        }
+
+        /* CARDS & HORIZONTAL SCROLL */
+        .premium-card {
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            border-radius: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+            scroll-snap-align: start;
+        }
+        .premium-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
+            border-color: rgba(255, 139, 44, 0.3);
+        }
+        .image-zoom {
+            overflow: hidden;
+            border-radius: 1.2rem;
+        }
+        .image-zoom img {
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .image-zoom:hover img {
+            transform: scale(1.08);
+        }
+        .scroll-container {
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
             scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
+            padding-bottom: 1.5rem;
+            display: flex;
+            gap: 1.5rem;
         }
-        .cake-card, .dessert-card { 
-            scroll-snap-align: center; 
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+        .scroll-container {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .glass-badge {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            color: #1a1a1a;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        /* WHATSAPP FLOAT */
+        .wa-float {
+            background: #25D366;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 100;
+        }
+        .wa-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 28px rgba(37, 211, 102, 0.5);
         }
 
-        /* =============================================
-           UTILITIES & BADGES
-        ============================================= */
-        .matte-divider { border: none; border-top: 1px solid rgba(194,96,10,0.15); }
-        .contact-glass {
-            background: rgba(255,255,255,0.9); backdrop-filter: blur(20px) saturate(1.3);
-            border: 1px solid rgba(194,96,10,0.15); box-shadow: 0 8px 48px rgba(194,96,10,0.09), 0 1px 0 rgba(255,255,255,0.7) inset;
+        /* FIXED SOCIAL ICONS - Bulletproof */
+        .social-icon {
+            width: 46px;
+            height: 46px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid #FF8B2C; 
+            color: #FF8B2C; 
+            transition: all 0.3s ease;
         }
-        .glass-badge { background: rgba(194,96,10,0.08); backdrop-filter: blur(10px); border: 1px solid rgba(194,96,10,0.22); color: #c2600a; }
-        .glass-badge-red { background: rgba(194,96,10,0.85); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.35); color: #fff; }
-        .matte-footer { background: #ffffff; border-top: 1px solid rgba(194,96,10,0.15); }
-        .social-icon { background: rgba(194,96,10,0.08); border: 1px solid rgba(194,96,10,0.20); color: #c2600a; transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1); }
-        .social-icon:hover { background: rgba(194,96,10,0.85); color: #fff; transform: translateY(-3px) scale(1.08); box-shadow: 0 6px 20px rgba(194,96,10,0.28); }
-        .icon-badge { background: rgba(194,96,10,0.08); border: 1px solid rgba(194,96,10,0.18); color: #c2600a; }
+        .social-icon:hover {
+            background: #FF8B2C;
+            color: white; 
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(255, 139, 44, 0.3);
+        }
 
-        /* =============================================
-           MOBILE MENU
-        ============================================= */
-        #mobile-menu { background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(194,96,10,0.12); }
-        .mobile-link { display: block; padding: 0.75rem 1rem; font-weight: 500; color: #c2600a; border-radius: 0.5rem; transition: background 0.2s, letter-spacing 0.25s, color 0.2s; letter-spacing: 0.04em; cursor: pointer;}
-        .mobile-link:hover { background: rgba(194,96,10,0.08); color: #c2600a; letter-spacing: 0.08em; }
-
-        .gallery-item { transition: transform 0.4s ease, box-shadow 0.4s ease; }
-        .gallery-item:hover { transform: translateY(-5px) scale(1.01); box-shadow: 0 16px 40px rgba(194,96,10,0.15); }
-        @keyframes ping-orange { 75%, 100% { transform: scale(2); opacity: 0; } }
-        .ping-dot { animation: ping-orange 1.4s cubic-bezier(0,0,0.2,1) infinite; }
+        /* ANIMATIONS */
+        .fade-in-up {
+            animation: fadeUp 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+            opacity: 0;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-delay-1 { animation-delay: 0.1s; }
+        .fade-delay-2 { animation-delay: 0.25s; }
+        .fade-delay-3 { animation-delay: 0.4s; }
     </style>
 </head>
+<body>
 
-<body class="font-sans antialiased selection:bg-brand-DEFAULT selection:text-white">
+<div id="preloader">
+    <img src="ibee_logo2.png" alt="Indian Bakery" class="preloader-logo" onerror="this.src='https://placehold.co/160x100/ffffff/FF8B2C?text=iBee'">
+    <div class="preloader-text">SINCE 1975</div>
+    <div class="loading-line"></div>
+</div>
 
-    <!-- ===================== PRELOADER ===================== -->
-    <div id="preloader" aria-hidden="true">
-        <div class="preloader-rings">
-            <div class="preloader-ring"></div>
-            <div class="preloader-ring-inner"></div>
+<a href="https://wa.me/919846699555" target="_blank" class="wa-float fixed bottom-6 right-6 text-white p-4 rounded-full flex items-center justify-center group z-50 shadow-xl">
+    <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12.04 2A9.93 9.93 0 0 0 3 16.95L2 22l5.2-1.36A9.96 9.96 0 1 0 12.04 2zm0 18a8.03 8.03 0 0 1-4.08-1.12l-.29-.17-3.08.81.82-3-.19-.31A8.04 8.04 0 1 1 12.04 20zm4.39-5.56c-.24-.12-1.41-.7-1.63-.78s-.38-.12-.54.12-.62.78-.76.94-.28.18-.52.06a6.6 6.6 0 0 1-1.94-1.2 7.3 7.3 0 0 1-1.35-1.67c-.14-.24 0-.37.11-.49.11-.11.24-.28.36-.42s.16-.24.24-.4a.45.45 0 0 0 0-.42c-.06-.12-.54-1.3-.74-1.78s-.39-.41-.54-.42h-.46a.88.88 0 0 0-.64.3 2.68 2.68 0 0 0-.83 2 4.67 4.67 0 0 0 1 2.48 10.7 10.7 0 0 0 4.1 3.81c.57.25 1 .4 1.35.51a3.24 3.24 0 0 0 1.49.09 2.42 2.42 0 0 0 1.58-1.12 2 2 0 0 0 .14-1.12c-.06-.1-.22-.16-.46-.28z" />
+    </svg>
+    <span class="absolute right-16 bg-white text-whatsapp border border-gray-100 px-4 py-2 rounded-xl text-xs font-bold shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">Order on WhatsApp</span>
+</a>
+
+<nav id="navbar" class="fixed w-full z-40 py-5 glass-nav">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+        <div class="flex justify-between items-center">
+            <div class="flex-shrink-0 flex items-center">
+                <a onclick="navTo('home')" class="flex items-center gap-3 group cursor-pointer">
+                    <img src="340373253_1417780449033746_7542344205153847137_n.jpg" onerror="this.src='https://ui-avatars.com/api/?name=IB&background=fff&color=FF8B2C'" alt="Indian Bakery" class="h-12 w-auto transition-transform duration-500 group-hover:scale-105">
+                    <span class="hidden sm:block font-serif text-2xl font-semibold text-gray-900 tracking-wide">
+                        Indian <span class="text-brand-DEFAULT italic">Bakery.</span>
+                    </span>
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-10 items-center">
+                <a onclick="navTo('home')" class="nav-link">Home</a>
+                <a onclick="navTo('home', 'about')" class="nav-link">Our Story</a>
+                <a onclick="navTo('cakes')" class="nav-link">Cakes</a>
+                <a onclick="navTo('desserts')" class="nav-link">Desserts</a>
+                <a onclick="navTo('snacks')" class="nav-link">Snacks</a>
+                <a onclick="navTo('home', 'contact')" class="btn-solid !py-2.5 !px-7 text-sm shadow-md">Contact Us</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-btn" class="text-gray-900 p-2 rounded-lg hover:bg-gray-100 transition">
+                    <i data-lucide="menu" class="h-7 w-7"></i>
+                </button>
+            </div>
         </div>
-        <p class="font-elegant text-brand-DEFAULT tracking-luxury text-sm uppercase mb-5" style="font-size:0.78rem;letter-spacing:0.22em;">Indian Bakery</p>
-        <div style="display:flex;gap:8px;">
-            <div class="preloader-dot"></div>
-            <div class="preloader-dot"></div>
-            <div class="preloader-dot"></div>
+    </div>
+    <div id="mobile-menu" class="hidden md:hidden absolute w-full left-0 top-full bg-white/95 backdrop-blur-lg shadow-xl border-b border-gray-100">
+        <div class="px-6 pt-4 pb-8 space-y-2">
+            <a onclick="navTo('home')" class="block py-3 font-medium text-gray-800 hover:text-brand-DEFAULT">Home</a>
+            <a onclick="navTo('home', 'about')" class="block py-3 font-medium text-gray-800 hover:text-brand-DEFAULT">Our Story</a>
+            <a onclick="navTo('cakes')" class="block py-3 font-medium text-gray-800 hover:text-brand-DEFAULT">Cakes</a>
+            <a onclick="navTo('desserts')" class="block py-3 font-medium text-gray-800 hover:text-brand-DEFAULT">Desserts</a>
+            <a onclick="navTo('snacks')" class="block py-3 font-medium text-gray-800 hover:text-brand-DEFAULT">Snacks</a>
+            <a onclick="navTo('home', 'contact')" class="btn-solid w-full mt-4 text-center py-3">Order Now</a>
         </div>
-        <p class="font-sans text-brand-DEFAULT mt-6" style="font-size:0.72rem;letter-spacing:0.14em;opacity:0.8;">Est. 1975 · Thodupuzha</p>
+    </div>
+</nav>
+
+<div id="view-home" class="page-view block">
+    <section id="hero" class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="486605147_1433666384573871_2317721932263417713_n%20(1).jpg" onerror="this.src='https://images.unsplash.com/photo-1517433670267-08bbd4be890f?q=80&w=2000&auto=format'" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80"></div>
+        </div>
+        <div class="relative z-10 text-center px-6 max-w-5xl mx-auto fade-in-up">
+            <span class="inline-flex items-center gap-3 px-6 py-2 rounded-full text-xs font-semibold font-sans tracking-[0.2em] mb-8 fade-in-up fade-delay-1 text-white border border-white/20 bg-white/10 backdrop-blur-md uppercase">
+                <span class="w-2 h-2 rounded-full bg-brand-DEFAULT inline-block animate-pulse"></span>
+                Welcome to Thodupuzha's Pride
+            </span>
+            <h1 class="font-elegant text-white leading-tight mb-6 fade-in-up fade-delay-2 text-6xl md:text-8xl drop-shadow-2xl font-light">
+                Baking Memories<br>
+                <span class="text-brand-DEFAULT font-semibold italic block mt-2">Since 1975.</span>
+            </h1>
+            <p class="text-gray-200 mb-10 max-w-2xl mx-auto fade-in-up fade-delay-3 font-light text-lg md:text-xl leading-relaxed">Discover authentic premium cakes, traditional Kerala snacks, and our signature faloodas, crafted with love.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 md:gap-6 fade-in-up fade-delay-3">
+                <a onclick="scrollToMenu()" class="btn-solid text-lg px-8 py-4 shadow-xl cursor-pointer">Explore Menu <i data-lucide="arrow-down" class="w-5 h-5 ml-1"></i></a>
+                <a onclick="navTo('home', 'contact')" class="btn-outline-white text-lg px-8 py-4 cursor-pointer">Contact Us</a>
+            </div>
+        </div>
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 opacity-70 animate-bounce">
+            <span class="text-white text-xs tracking-[0.3em] uppercase font-semibold">Scroll</span>
+            <div class="w-px h-10 bg-white/50"></div>
+        </div>
+    </section>
+
+    <section id="about" class="py-24 md:py-32 bg-[#FAFAFA]">
+        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+            <div class="flex flex-col md:flex-row items-center gap-16 lg:gap-24">
+                <div class="w-full md:w-1/2 grid grid-cols-2 gap-6 relative">
+                    <img src="489305956_1448665259740650_3549309140238958396_n.jpg" class="rounded-[2rem] shadow-lg w-full h-72 object-cover image-zoom">
+                    <img src="490019632_1449303516343491_225561430116422405_n.jpg" class="rounded-[2rem] shadow-2xl w-full h-72 object-cover image-zoom mt-12">
+                    <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 glass-badge whitespace-nowrap">45 Years of Craft</div>
+                </div>
+                <div class="w-full md:w-1/2">
+                    <p class="text-brand-DEFAULT font-semibold tracking-[0.2em] text-sm mb-4 uppercase">Our Story</p>
+                    <h3 class="font-elegant font-semibold text-gray-900 text-4xl md:text-6xl leading-tight mb-8">A Legacy of Taste<br>in Thodupuzha</h3>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-6 font-light">Indian Bakery has a proud history of 45 years. Founded by Mr. V. T. Joseph, located in the heart of Thodupuzha town, we blend traditional Kerala recipes with modern baking techniques.</p>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-10 font-light">From melt-in-the-mouth Plum Cakes to crispy evening puffs and legendary faloodas — every item is crafted with love and finest ingredients.</p>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="flex gap-4 items-start">
+                            <div class="p-3 bg-white rounded-xl shadow-sm border border-gray-100"><i data-lucide="cake" class="w-6 h-6 text-brand-DEFAULT"></i></div>
+                            <div><h4 class="font-bold text-gray-900">Custom Cakes</h4><p class="text-sm text-gray-500 mt-1">For every occasion</p></div>
+                        </div>
+                        <div class="flex gap-4 items-start">
+                            <div class="p-3 bg-white rounded-xl shadow-sm border border-gray-100"><i data-lucide="coffee" class="w-6 h-6 text-brand-DEFAULT"></i></div>
+                            <div><h4 class="font-bold text-gray-900">Cafe Experience</h4><p class="text-sm text-gray-500 mt-1">Shakes & Snacks</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="menu-section" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+            <div class="text-center mb-16">
+                <p class="text-brand-DEFAULT font-semibold tracking-[0.2em] text-sm mb-3 uppercase">Our Full Menu</p>
+                <h3 class="font-elegant font-semibold text-gray-900 text-4xl md:text-5xl">Delicacies for Every Craving</h3>
+            </div>
+
+            <div class="mb-20">
+                <div class="flex justify-between items-end mb-6 border-b border-gray-100 pb-4">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="cake" class="w-7 h-7 text-brand-DEFAULT"></i>
+                        <h4 class="font-serif text-3xl font-semibold text-gray-900">Premium Cakes</h4>
+                    </div>
+                    <a onclick="navTo('cakes')" class="text-gray-500 hover:text-brand-DEFAULT text-sm font-medium transition flex items-center gap-1 cursor-pointer uppercase tracking-wider">View All <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                </div>
+                <div class="scroll-container flex gap-6 pb-4">
+                    <div class="premium-card min-w-[280px] md:min-w-[340px]"><div class="h-64 overflow-hidden rounded-t-[1.5rem]"><img src="490019632_1449303516343491_225561430116422405_n.jpg" class="w-full h-full object-cover"></div><div class="p-6"><h4 class="font-serif text-xl font-semibold text-gray-900">Elegant Celebration</h4><p class="text-gray-500 text-sm mt-1">Multi-tier with roses</p><div class="flex justify-between items-center mt-6"><span class="font-sans font-semibold text-brand-DEFAULT text-lg">₹1200/kg</span><a onclick="navTo('cakes')" class="btn-solid !py-2 !px-5 text-xs">View</a></div></div></div>
+                    <div class="premium-card min-w-[280px] md:min-w-[340px]"><div class="h-64 overflow-hidden rounded-t-[1.5rem]"><img src="493504641_1464427984831044_4455884902004233999_n.jpg" class="w-full h-full object-cover"></div><div class="p-6"><h4 class="font-serif text-xl font-semibold text-gray-900">Superhero Web</h4><p class="text-gray-500 text-sm mt-1">Spiderman design</p><div class="flex justify-between items-center mt-6"><span class="font-sans font-semibold text-brand-DEFAULT text-lg">₹950/kg</span><a onclick="navTo('cakes')" class="btn-solid !py-2 !px-5 text-xs">View</a></div></div></div>
+                    <div class="premium-card min-w-[280px] md:min-w-[340px]"><div class="h-64 overflow-hidden rounded-t-[1.5rem]"><img src="489463079_1448665063074003_9170913617709119392_n.jpg" class="w-full h-full object-cover"></div><div class="p-6"><h4 class="font-serif text-xl font-semibold text-gray-900">Cocomelon Theme</h4><p class="text-gray-500 text-sm mt-1">Custom fondant</p><div class="flex justify-between items-center mt-6"><span class="font-sans font-semibold text-brand-DEFAULT text-lg">₹1100/kg</span><a onclick="navTo('cakes')" class="btn-solid !py-2 !px-5 text-xs">View</a></div></div></div>
+                    <div class="premium-card min-w-[280px] md:min-w-[340px]"><div class="h-64 overflow-hidden rounded-t-[1.5rem]"><img src="488253758_1442571063683403_4251100749907473567_n.jpg" class="w-full h-full object-cover"></div><div class="p-6"><h4 class="font-serif text-xl font-semibold text-gray-900">Premium Red Velvet</h4><p class="text-gray-500 text-sm mt-1">Cream cheese frosting</p><div class="flex justify-between items-center mt-6"><span class="font-sans font-semibold text-brand-DEFAULT text-lg">₹1000/kg</span><a onclick="navTo('cakes')" class="btn-solid !py-2 !px-5 text-xs">View</a></div></div></div>
+                </div>
+            </div>
+
+            <div class="mb-20">
+                <div class="flex justify-between items-end mb-6 border-b border-gray-100 pb-4">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="ice-cream" class="w-7 h-7 text-brand-DEFAULT"></i>
+                        <h4 class="font-serif text-3xl font-semibold text-gray-900">Sweet Desserts</h4>
+                    </div>
+                    <a onclick="navTo('desserts')" class="text-gray-500 hover:text-brand-DEFAULT text-sm font-medium transition flex items-center gap-1 cursor-pointer uppercase tracking-wider">View All <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                </div>
+                <div class="scroll-container flex gap-6 pb-4">
+                    <div class="premium-card min-w-[280px] md:min-w-[340px]"><div class="h-64 overflow-hidden rounded-t-[1.5rem]"><img src="490517089_1452274292713080_3072637725145829695_n.jpg" class="w-full h-full object-cover"></div><div class="p-6"><h4 class="font-serif text-xl font-semibold text-gray-900">Sizzling Brownie</h4><p class="text-gray-500 text-sm mt-1">Warm brownie + ice cream</p><div class="flex justify-between items-center mt-6"><span class="font-sans font-semibold text-brand-DEFAULT text-lg">₹180</span><a onclick="navTo('desserts')" class="btn-solid !py-2 !px-5 text-xs">View</a></div></div></div>
+                    <div class="premium-card min-w-[280px] md:min-w-[340px]"><div class="h-64 overflow-hidden rounded-t-[1.5rem]"><img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600&auto=format" class="w-full h-full object-cover"></div><div class="p-6"><h4 class="font-serif text-xl font-semibold text-gray-900">Royal Falooda</h4><p class="text-gray-500 text-sm mt-1">Fruits, jelly & nuts</p><div class="flex justify-between items-center mt-6"><span class="font-sans font-semibold text-brand-DEFAULT text-lg">₹150</span><a onclick="navTo('desserts')" class="btn-solid !py-2 !px-5 text-xs">View</a></div></div></div>
+                    <div class="premium-card min-w-[280px] md:min-w-[340px]"><div class="h-64 overflow-hidden rounded-t-[1.5rem]"><img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=600&auto=format" class="w-full h-full object-cover"></div><div class="p-6"><h4 class="font-serif text-xl font-semibold text-gray-900">Mango Mousse</h4><p class="text-gray-500 text-sm mt-1">Light & creamy</p><div class="flex justify-between items-center mt-6"><span class="font-sans font-semibold text-brand-DEFAULT text-lg">₹120</span><a onclick="navTo('desserts')" class="btn-solid !py-2 !px-5 text-xs">View</a></div></div></div>
+                    <div class="premium-card min-w-[280px] md:min-w-[340px]"><div class="h-64 overflow-hidden rounded-t-[1.5rem]"><img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=600&auto=format" class="w-full h-full object-cover"></div><div class="p-6"><h4 class="font-serif text-xl font-semibold text-gray-900">Classic Tiramisu</h4><p class="text-gray-500 text-sm mt-1">Coffee-flavored</p><div class="flex justify-between items-center mt-6"><span class="font-sans font-semibold text-brand-DEFAULT text-lg">₹160</span><a onclick="navTo('desserts')" class="btn-solid !py-2 !px-5 text-xs">View</a></div></div></div>
+                </div>
+            </div>
+
+            <div>
+                <div class="flex justify-between items-end mb-6 border-b border-gray-100 pb-4">
+                    <div class="flex items-center gap-3">
+                        <i data-lucide="coffee" class="w-7 h-7 text-brand-DEFAULT"></i>
+                        <h4 class="font-serif text-3xl font-semibold text-gray-900">Savory Snacks</h4>
+                    </div>
+                    <a onclick="navTo('snacks')" class="text-gray-500 hover:text-brand-DEFAULT text-sm font-medium transition flex items-center gap-1 cursor-pointer uppercase tracking-wider">View All <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                </div>
+                <div class="scroll-container flex gap-6 pb-4">
+                    <div class="premium-card min-w-[280px] md:min-w-[340px]"><div class="h-64 overflow-hidden rounded-t-[1.5rem]"><img src="490132153_1452522552688254_2895289336128599183_n.jpg" class="w-full h-full object-cover"></div><div class="p-6"><h4 class="font-serif text-xl font-semibold text-gray-900">Cheesy Loaded Fries</h4><p class="text-gray-500 text-sm mt-1">Crispy & cheesy</p><div class="mt-4"><span class="font-sans font-semibold text-brand-DEFAULT text-lg">₹220</span></div></div></div>
+                    <div class="premium-card min-w-[280px] md:min-w-[340px]"><div class="h-64 overflow-hidden rounded-t-[1.5rem]"><img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&auto=format" class="w-full h-full object-cover"></div><div class="p-6"><h4 class="font-serif text-xl font-semibold text-gray-900">Evening Puffs</h4><p class="text-gray-500 text-sm mt-1">Flaky & spiced meat</p><div class="mt-4"><span class="font-sans font-semibold text-brand-DEFAULT text-lg">₹30</span></div></div></div>
+                    <div class="premium-card min-w-[280px] md:min-w-[340px]"><div class="h-64 overflow-hidden rounded-t-[1.5rem]"><img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&auto=format" class="w-full h-full object-cover"></div><div class="p-6"><h4 class="font-serif text-xl font-semibold text-gray-900">Samosa</h4><p class="text-gray-500 text-sm mt-1">Crispy pastry with spiced potato</p><div class="mt-4"><span class="font-sans font-semibold text-brand-DEFAULT text-lg">₹25</span></div></div></div>
+                    <div class="premium-card min-w-[280px] md:min-w-[340px]"><div class="h-64 overflow-hidden rounded-t-[1.5rem]"><img src="https://images.unsplash.com/photo-1625938144755-6b6f0da0f9b2?w=600&auto=format" class="w-full h-full object-cover"></div><div class="p-6"><h4 class="font-serif text-xl font-semibold text-gray-900">Veg Cutlet</h4><p class="text-gray-500 text-sm mt-1">Crispy vegetable patty</p><div class="mt-4"><span class="font-sans font-semibold text-brand-DEFAULT text-lg">₹40</span></div></div></div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- ===================== FLOATING WHATSAPP ===================== -->
-    <a href="https://wa.me/919846699555" target="_blank"
-       class="wa-float fixed bottom-6 right-6 text-white p-4 rounded-full z-50 flex items-center justify-center group">
-        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2A9.93 9.93 0 0 0 3 16.95L2 22l5.2-1.36A9.96 9.96 0 1 0 12.04 2zm0 18a8.03 8.03 0 0 1-4.08-1.12l-.29-.17-3.08.81.82-3-.19-.31A8.04 8.04 0 1 1 12.04 20zm4.39-5.56c-.24-.12-1.41-.7-1.63-.78s-.38-.12-.54.12-.62.78-.76.94-.28.18-.52.06a6.6 6.6 0 0 1-1.94-1.2 7.3 7.3 0 0 1-1.35-1.67c-.14-.24 0-.37.11-.49.11-.11.24-.28.36-.42s.16-.24.24-.4a.45.45 0 0 0 0-.42c-.06-.12-.54-1.3-.74-1.78s-.39-.41-.54-.42h-.46a.88.88 0 0 0-.64.3 2.68 2.68 0 0 0-.83 2 4.67 4.67 0 0 0 1 2.48 10.7 10.7 0 0 0 4.1 3.81c.57.25 1 .4 1.35.51a3.24 3.24 0 0 0 1.49.09 2.42 2.42 0 0 0 1.58-1.12 2 2 0 0 0 .14-1.12c-.06-.1-.22-.16-.46-.28z"/></svg>
-        <span class="wa-label absolute right-16 text-brand-DEFAULT px-3 py-1.5 rounded-xl text-xs font-semibold shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap" style="letter-spacing:0.06em;">Order on WhatsApp</span>
-    </a>
-
-    <!-- ===================== NAVIGATION ===================== -->
-    <nav id="navbar" class="fixed w-full z-40 transition-all duration-400 py-3 glass-nav">
-        <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-            <div class="flex justify-between items-center">
-                <div class="flex-shrink-0 flex items-center">
-                    <a onclick="navTo('home')" class="flex items-center gap-3 group cursor-pointer">
-                        <img src="340373253_1417780449033746_7542344205153847137_n.jpg"
-                             onerror="this.src='https://ui-avatars.com/api/?name=IB&background=c2600a&color=fff'"
-                             alt="Indian Bakery Logo"
-                             class="h-14 md:h-16 w-auto rounded-xl shadow-md border border-brand-DEFAULT/20 transition-transform duration-300 group-hover:scale-105">
-                        <span class="hidden sm:block font-elegant text-2xl md:text-3xl font-semibold text-brand-DEFAULT tracking-wide" style="letter-spacing:0.04em;">
-                            Indian Bakery<span class="text-brand-DEFAULT">.</span>
-                        </span>
-                    </a>
+    <section id="contact" class="py-24 bg-[#FAFAFA] border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-6 lg:px-10">
+            <div class="bg-white rounded-[2.5rem] shadow-xl overflow-hidden flex flex-col lg:flex-row border border-gray-100">
+                <div class="lg:w-5/12 p-12 flex flex-col justify-center">
+                    <div class="mb-8">
+                        <span class="text-brand-DEFAULT font-semibold tracking-widest text-xs uppercase bg-orange-50 px-3 py-1 rounded-full">Say Hello</span>
+                    </div>
+                    <h3 class="font-elegant text-5xl font-semibold text-gray-900 mb-4">Drop by <br><span class="italic font-light">&</span> say hi</h3>
+                    <p class="text-gray-500 mb-10 font-light text-lg">We're here to make your day sweeter.</p>
+                    <div class="space-y-6">
+                        <div class="flex gap-5 items-start">
+                            <div class="p-3 bg-gray-50 rounded-full text-brand-DEFAULT"><i data-lucide="map-pin"></i></div>
+                            <div><h4 class="font-semibold text-gray-900">Location</h4><p class="text-gray-500 mt-1">Thodupuzha town, Kerala</p></div>
+                        </div>
+                        <div class="flex gap-5 items-start">
+                            <div class="p-3 bg-gray-50 rounded-full text-brand-DEFAULT"><i data-lucide="clock"></i></div>
+                            <div><h4 class="font-semibold text-gray-900">Hours</h4><p class="text-gray-500 mt-1">Mon-Sun: 08:30 AM – 09:30 PM</p></div>
+                        </div>
+                        <div class="flex gap-5 items-start">
+                            <div class="p-3 bg-green-50 rounded-full text-whatsapp"><i data-lucide="message-circle"></i></div>
+                            <div><h4 class="font-semibold text-gray-900">WhatsApp</h4><a href="https://wa.me/919846699555" class="text-whatsapp font-semibold hover:underline mt-1 inline-block">+91 98466 99555</a></div>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a onclick="navTo('home')" class="nav-link">Home</a>
-                    <a onclick="navTo('home', 'about')" class="nav-link">Our Story</a>
-                    <a onclick="navTo('cakes')" class="nav-link">Cakes</a>
-                    <a onclick="navTo('desserts')" class="nav-link">Desserts</a>
-                    <a onclick="navTo('home', 'contact')" class="btn-glass btn-glass-sm">Contact Us</a>
-                </div>
-
-                <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-brand-DEFAULT p-2 rounded-lg transition-colors hover:bg-brand-DEFAULT/10">
-                        <i data-lucide="menu" class="h-7 w-7"></i>
-                    </button>
+                <div class="lg:w-7/12 relative min-h-[450px]">
+                    <img src="490517089_1452274292713080_3072637725145829695_n.jpg" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-black/20 flex items-center justify-center p-6">
+                        <div class="bg-white/90 backdrop-blur-md p-8 rounded-3xl text-center shadow-2xl max-w-xs w-full transition-transform hover:scale-105 duration-300">
+                            <i data-lucide="instagram" class="w-12 h-12 mx-auto text-brand-DEFAULT mb-4"></i>
+                            <h4 class="font-bold text-2xl text-gray-900">Follow us</h4>
+                            <p class="text-gray-500 text-sm mt-2 mb-6">For daily fresh bakes!</p>
+                            <a href="https://www.instagram.com/indianbakery38/" target="_blank" class="btn-solid w-full shadow-lg">@indianbakery_tdp</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </section>
+</div>
 
-        <div id="mobile-menu" class="hidden md:hidden absolute w-full left-0 top-full">
-            <div class="px-5 pt-3 pb-6 space-y-1">
-                <a onclick="navTo('home')" class="mobile-link">Home</a>
-                <a onclick="navTo('home', 'about')" class="mobile-link">Our Story</a>
-                <a onclick="navTo('cakes')" class="mobile-link">Cakes</a>
-                <a onclick="navTo('desserts')" class="mobile-link">Desserts</a>
-                <a onclick="navTo('home', 'contact')" class="btn-glass w-full mt-3 text-center" style="border-radius:0.75rem;">Order Now</a>
-            </div>
-        </div>
-    </nav>
-
-
-    <!-- ========================================================= -->
-    <!--                       VIEW: HOME                          -->
-    <!-- ========================================================= -->
-    <div id="view-home" class="page-view block">
-        
-        <!-- HERO -->
-        <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
-            <div class="absolute inset-0 w-full h-full">
-                <img src="486605147_1433666384573871_2317721932263417713_n.jpg"
-                     onerror="this.src='https://images.unsplash.com/photo-1517433670267-08bbd4be890f?q=80&w=2000&auto=format&fit=crop'"
-                     alt="Fresh baked goods display"
-                     class="w-full h-full object-cover object-center opacity-90">
-                <div class="absolute inset-0 hero-overlay"></div>
-            </div>
-
-            <div class="relative z-10 text-center px-6 max-w-5xl mx-auto mt-20 fade-in-up">
-                <span class="glass-badge inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold mb-8 fade-in-up fade-delay-1" style="letter-spacing:0.16em;">
-                    <span class="w-1.5 h-1.5 rounded-full bg-brand-DEFAULT inline-block"></span>
-                    WELCOME TO THODUPUZHA'S PRIDE
-                </span>
-                <h1 class="font-elegant font-semibold text-brand-DEFAULT leading-none mb-6 fade-in-up fade-delay-2"
-                    style="font-size:clamp(3.2rem,8vw,6.5rem);line-height:1.08;letter-spacing:0.01em;">
-                    Baking Memories<br>
-                    <span class="italic text-brand-DEFAULT" style="font-size:0.85em;">Since 1975.</span>
-                </h1>
-                <p class="text-brand-DEFAULT mb-12 max-w-2xl mx-auto fade-in-up fade-delay-3"
-                   style="font-size:clamp(1rem,2vw,1.2rem);line-height:1.9;letter-spacing:0.02em;font-weight:400;">
-                    Discover the authentic taste of premium cakes, traditional Kerala snacks,
-                    and our signature faloodas right in the heart of Thodupuzha.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4 fade-in-up fade-delay-3">
-                    <a onclick="navTo('cakes')" class="btn-glass text-base px-9 py-4 cursor-pointer">
-                        Explore Cakes <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </a>
-                    <a onclick="navTo('home', 'contact')" class="btn-glass-outline text-base px-9 py-4 cursor-pointer">
-                        Contact Us
-                    </a>
-                </div>
-            </div>
-
-            <!-- Scroll hint -->
-            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-80">
-                <span class="font-sans text-brand-DEFAULT" style="font-size:0.68rem;letter-spacing:0.18em;">SCROLL</span>
-                <div class="w-px h-10 bg-gradient-to-b from-brand-DEFAULT to-transparent"></div>
-            </div>
-        </section>
-
-        <!-- ABOUT -->
-        <section id="about" class="py-24 md:py-32">
-            <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-                <div class="flex flex-col md:flex-row items-center gap-14 lg:gap-24">
-                    <div class="w-full md:w-1/2 grid grid-cols-2 gap-4 relative">
-                        <img src="489305956_1448665259740650_3549309140238958396_n.jpg"
-                             loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=800&auto=format&fit=crop'"
-                             alt="Custom Kids Cakes"
-                             class="gallery-item rounded-2xl shadow-lg w-full h-64 object-cover mt-8 border border-brand-DEFAULT/10 image-zoom overflow-hidden">
-                        <img src="490019632_1449303516343491_225561430116422405_n.jpg"
-                             loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=800&auto=format&fit=crop'"
-                             alt="Beautiful wedding cake"
-                             class="gallery-item rounded-2xl shadow-lg w-full h-64 object-cover border border-brand-DEFAULT/10 image-zoom overflow-hidden">
-                        <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 glass-badge px-5 py-2 rounded-full text-xs font-semibold whitespace-nowrap shadow-md" style="letter-spacing:0.12em;backdrop-filter:blur(10px);">
-                            45 Years of Craft
-                        </div>
-                    </div>
-
-                    <div class="w-full md:w-1/2 pt-8 md:pt-0">
-                        <p class="text-brand-DEFAULT font-semibold mb-3" style="font-size:0.75rem;letter-spacing:0.22em;">OUR STORY</p>
-                        <h3 class="font-elegant font-semibold text-brand-DEFAULT mb-7 leading-tight"
-                            style="font-size:clamp(2rem,4vw,3.2rem);letter-spacing:0.01em;">
-                            A Legacy of Taste<br>in Thodupuzha
-                        </h3>
-                        <p class="text-brand-DEFAULT mb-6 leading-relaxed" style="font-size:1.05rem;line-height:1.9;">
-                            Indian Bakery has a long bound history of 45 years. It has been founded by Mr. V. T. Joseph. Located conveniently in Thodupuzha town, we blend traditional Kerala recipes with modern baking techniques to bring you unparalleled flavor in every bite.
-                        </p>
-                        <p class="text-brand-DEFAULT mb-10 leading-relaxed" style="font-size:1.05rem;line-height:1.9;">
-                            From our melt-in-the-mouth Plum Cakes to our crispy evening puffs and legendary faloodas, every item is crafted with love and the finest ingredients.
-                        </p>
-
-                        <div class="grid grid-cols-2 gap-6">
-                            <div class="matte-card rounded-2xl p-5 flex items-start gap-4">
-                                <div class="icon-badge p-3 rounded-xl shrink-0">
-                                    <i data-lucide="cake" class="w-5 h-5"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-brand-DEFAULT mb-1" style="font-size:0.9rem;">Custom Cakes</h4>
-                                    <p class="text-brand-DEFAULT" style="font-size:0.8rem;line-height:1.6;opacity:0.9;">For every special occasion</p>
-                                </div>
-                            </div>
-                            <div class="matte-card rounded-2xl p-5 flex items-start gap-4">
-                                <div class="icon-badge p-3 rounded-xl shrink-0">
-                                    <i data-lucide="coffee" class="w-5 h-5"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-brand-DEFAULT mb-1" style="font-size:0.9rem;">Cafe Experience</h4>
-                                    <p class="text-brand-DEFAULT" style="font-size:0.8rem;line-height:1.6;opacity:0.9;">Shakes, Juices & Snacks</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <hr class="matte-divider max-w-5xl mx-auto">
-
-        <!-- SAVORIES & SNACKS -->
-        <section id="snacks" class="py-24">
-            <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-                <div class="text-center max-w-3xl mx-auto mb-16">
-                    <p class="text-brand-DEFAULT font-semibold mb-3" style="font-size:0.75rem;letter-spacing:0.22em;">SAVORIES &amp; SNACKS</p>
-                    <h3 class="font-elegant font-semibold text-brand-DEFAULT mb-5"
-                        style="font-size:clamp(2rem,4vw,3rem);letter-spacing:0.01em;">Craving Something Salty?</h3>
-                    <p class="text-brand-DEFAULT" style="font-size:1.05rem;line-height:1.8;">Perfect evening bites to go with your coffee or tea.</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                    <!-- Snack 1 -->
-                    <div class="matte-card rounded-2xl overflow-hidden image-zoom group flex flex-col cursor-default">
-                        <div class="h-64 overflow-hidden relative border-b border-brand-DEFAULT/10">
-                            <img src="490132153_1452522552688254_2895289336128599183_n.jpg"
-                                 loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1585692277358-e364c5739d16?q=80&w=800&auto=format&fit=crop'"
-                                 alt="Cheesy Loaded Fries" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-7 flex flex-col flex-grow">
-                            <h4 class="font-elegant font-semibold text-brand-DEFAULT mb-2" style="font-size:1.3rem;">Cheesy Loaded Fries</h4>
-                            <p class="text-brand-DEFAULT flex-grow opacity-90" style="font-size:0.9rem;line-height:1.7;">Crispy fries generously topped with melted cheese, savory meats, and sauces.</p>
-                            <div class="mt-5 pt-5 border-t border-brand-DEFAULT/10 flex justify-between items-center">
-                                <span class="font-elegant font-semibold text-brand-DEFAULT" style="font-size:1.4rem;">₹ 220</span>
-                                <a onclick="navTo('home', 'contact')" class="btn-glass btn-glass-sm cursor-pointer">Order Now</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Snack 2 -->
-                    <div class="matte-card rounded-2xl overflow-hidden image-zoom group flex flex-col cursor-default">
-                        <div class="h-64 overflow-hidden relative border-b border-brand-DEFAULT/10">
-                            <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?q=80&w=800&auto=format&fit=crop"
-                                 loading="lazy" alt="Evening Puffs" class="w-full h-full object-cover">
-                        </div>
-                        <div class="p-7 flex flex-col flex-grow">
-                            <h4 class="font-elegant font-semibold text-brand-DEFAULT mb-2" style="font-size:1.3rem;">Evening Puffs</h4>
-                            <p class="text-brand-DEFAULT flex-grow opacity-90" style="font-size:0.9rem;line-height:1.7;">Our legendary flaky, buttery puffs filled with perfectly spiced meat — Thodupuzha's favourite.</p>
-                            <div class="mt-5 pt-5 border-t border-brand-DEFAULT/10 flex justify-between items-center">
-                                <span class="font-elegant font-semibold text-brand-DEFAULT" style="font-size:1.4rem;">₹ 30</span>
-                                <a onclick="navTo('home', 'contact')" class="btn-glass btn-glass-sm cursor-pointer">Order Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <hr class="matte-divider max-w-5xl mx-auto">
-
-        <!-- GALLERY -->
-        <section id="gallery" class="py-24">
-            <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-                <div class="text-center max-w-3xl mx-auto mb-16">
-                    <p class="text-brand-DEFAULT font-semibold mb-3" style="font-size:0.75rem;letter-spacing:0.22em;">OUR CREATIONS</p>
-                    <h3 class="font-elegant font-semibold text-brand-DEFAULT mb-5"
-                        style="font-size:clamp(2rem,4vw,3rem);letter-spacing:0.01em;">Crafted with Passion</h3>
-                    <p class="text-brand-DEFAULT" style="font-size:1.05rem;line-height:1.8;">A glimpse of what makes every bite extraordinary.</p>
-                </div>
-
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <div class="gallery-item overflow-hidden rounded-2xl h-52 md:h-64 image-zoom col-span-2 border border-brand-DEFAULT/10 shadow-md">
-                        <img src="490019632_1449303516343491_225561430116422405_n.jpg" loading="lazy"
-                             onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=800&auto=format&fit=crop'"
-                             class="w-full h-full object-cover" alt="Wedding Cake">
-                    </div>
-                    <div class="gallery-item overflow-hidden rounded-2xl h-52 md:h-64 image-zoom border border-brand-DEFAULT/10 shadow-md">
-                        <img src="493504641_1464427984831044_4455884902004233999_n.jpg" loading="lazy"
-                             onerror="this.src='https://images.unsplash.com/photo-1557925923-33b251dc32a6?q=80&w=800&auto=format&fit=crop'"
-                             class="w-full h-full object-cover" alt="Spiderman Cake">
-                    </div>
-                    <div class="gallery-item overflow-hidden rounded-2xl h-52 md:h-64 image-zoom border border-brand-DEFAULT/10 shadow-md">
-                        <img src="489463079_1448665063074003_9170913617709119392_n.jpg" loading="lazy"
-                             onerror="this.src='https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80&w=800&auto=format&fit=crop'"
-                             class="w-full h-full object-cover" alt="Cocomelon Cake">
-                    </div>
-                    <div class="gallery-item overflow-hidden rounded-2xl h-52 md:h-64 image-zoom border border-brand-DEFAULT/10 shadow-md">
-                        <img src="488253758_1442571063683403_4251100749907473567_n.jpg" loading="lazy"
-                             onerror="this.src='https://images.unsplash.com/photo-1616541823729-00fe0aacd32c?q=80&w=800&auto=format&fit=crop'"
-                             class="w-full h-full object-cover" alt="Red Velvet Cake">
-                    </div>
-                    <div class="gallery-item overflow-hidden rounded-2xl h-52 md:h-64 image-zoom col-span-2 md:col-span-3 border border-brand-DEFAULT/10 shadow-md">
-                        <img src="490517089_1452274292713080_3072637725145829695_n.jpg" loading="lazy"
-                             onerror="this.src='https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=800&auto=format&fit=crop'"
-                             class="w-full h-full object-cover" alt="Brownie Ice Cream">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <hr class="matte-divider max-w-5xl mx-auto">
-        
-        <!-- CONTACT -->
-        <section id="contact" class="py-24 md:py-32">
-            <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-                <div class="contact-glass rounded-3xl overflow-hidden flex flex-col lg:flex-row">
-
-                    <!-- Info panel -->
-                    <div class="w-full lg:w-5/12 p-10 md:p-14 flex flex-col justify-center relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-56 h-56 rounded-full" style="background:radial-gradient(circle,rgba(194,96,10,0.06) 0%,transparent 70%);transform:translate(30%,-30%);"></div>
-                        <div class="absolute bottom-0 left-0 w-40 h-40 rounded-full" style="background:radial-gradient(circle,rgba(194,96,10,0.05) 0%,transparent 70%);transform:translate(-30%,30%);"></div>
-
-                        <div class="glass-badge inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold w-max mb-8 relative z-10 shadow-sm" style="letter-spacing:0.12em;">
-                            <span class="relative flex h-2.5 w-2.5">
-                                <span class="ping-dot absolute inline-flex h-full w-full rounded-full bg-brand-DEFAULT opacity-60"></span>
-                                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-DEFAULT"></span>
-                            </span>
-                            Freshly Baked Daily
-                        </div>
-
-                        <h3 class="font-elegant font-semibold text-brand-DEFAULT mb-4 relative z-10"
-                            style="font-size:clamp(1.8rem,3vw,2.6rem);letter-spacing:0.01em;">Drop by &amp; say hi</h3>
-                        <p class="text-brand-DEFAULT mb-10 relative z-10 leading-relaxed opacity-90" style="font-size:1rem;line-height:1.9;">
-                            Follow the sweet aroma to our doors! Whether you're grabbing a quick evening puff or picking up a celebration cake, we're here to make your day sweeter.
-                        </p>
-
-                        <div class="space-y-7 relative z-10">
-                            <div class="flex items-start gap-4">
-                                <div class="icon-badge p-3 rounded-xl shrink-0">
-                                    <i data-lucide="map-pin" class="w-5 h-5"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-brand-DEFAULT mb-1" style="font-size:0.9rem;letter-spacing:0.04em;">Our Location</h4>
-                                    <p class="text-brand-DEFAULT opacity-90 leading-relaxed" style="font-size:0.88rem;">Thodupuzha town,<br>Thodupuzha, Kerala, India</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-4">
-                                <div class="icon-badge p-3 rounded-xl shrink-0">
-                                    <i data-lucide="clock" class="w-5 h-5"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-brand-DEFAULT mb-1" style="font-size:0.9rem;letter-spacing:0.04em;">Opening Hours</h4>
-                                    <p class="text-brand-DEFAULT opacity-90" style="font-size:0.88rem;">Monday – Sunday</p>
-                                    <p class="text-brand-DEFAULT font-semibold" style="font-size:1rem;">08:30 AM – 09:30 PM</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-4">
-                                <div class="p-3 rounded-xl shrink-0" style="background:rgba(37,211,102,0.18);border:1px solid rgba(37,211,102,0.28);">
-                                    <i data-lucide="message-circle" class="w-5 h-5" style="color:#17a349;"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-semibold text-brand-DEFAULT mb-1" style="font-size:0.9rem;letter-spacing:0.04em;">WhatsApp for Orders</h4>
-                                    <a href="https://wa.me/919846699555" target="_blank" class="text-brand-DEFAULT font-semibold hover:opacity-80 transition-all duration-200 block hover:tracking-wide" style="font-size:1.05rem;">+91 98466 99555</a>
-                                    <a href="mailto:indianbakery@email.com" class="text-brand-DEFAULT opacity-90 hover:opacity-100 transition-all duration-200 block mt-2 text-sm hover:tracking-wide">
-                                        <i data-lucide="mail" class="w-3.5 h-3.5 inline align-middle mr-1"></i> indianbakery@email.com
-                                    </a>
-                                    <a href="http://indianbakeryib.com" target="_blank" class="text-brand-DEFAULT opacity-90 hover:opacity-100 transition-all duration-200 block mt-1 text-sm hover:tracking-wide">
-                                        <i data-lucide="globe" class="w-3.5 h-3.5 inline align-middle mr-1"></i> indianbakeryib.com
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Image + social panel -->
-                    <div class="w-full lg:w-7/12 relative min-h-[400px] overflow-hidden">
-                        <img src="490517089_1452274292713080_3072637725145829695_n.jpg" loading="lazy"
-                             onerror="this.src='https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1000&auto=format&fit=crop'"
-                             alt="Sizzling Brownie" class="absolute inset-0 w-full h-full object-cover">
-                        <div class="absolute inset-0 flex items-center justify-center p-8" style="background:rgba(255,255,255,0.6);backdrop-filter:blur(2px);">
-                            <div class="rounded-3xl text-center p-8 max-w-sm shadow-2xl" style="background:rgba(255,255,255,0.9);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,0.55);">
-                                <i data-lucide="instagram" class="w-10 h-10 mx-auto text-brand-DEFAULT mb-4"></i>
-                                <h4 class="font-elegant font-semibold text-brand-DEFAULT mb-3" style="font-size:1.4rem;">Follow our Journey</h4>
-                                <p class="text-brand-DEFAULT opacity-90 mb-7 leading-relaxed" style="font-size:0.88rem;line-height:1.7;">Follow us on Facebook and Instagram for daily fresh bake updates and special offers!</p>
-                                <a href="https://www.instagram.com/indianbakery38/" target="_blank" class="btn-glass">
-                                    @indianbakery_tdp
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+<div id="view-cakes" class="page-view hidden">
+    <div class="pt-40 pb-20 text-center bg-gray-50">
+        <h1 class="font-elegant text-6xl font-semibold text-gray-900">Our Signature Cakes</h1>
+        <p class="text-gray-500 mt-4 text-lg">Handcrafted for your special moments</p>
     </div>
-
-    <!-- ========================================================= -->
-    <!--                       VIEW: CAKES                          -->
-    <!-- ========================================================= -->
-    <div id="view-cakes" class="page-view hidden">
-        <div class="page-hero pt-32 pb-14 text-center">
-            <div class="max-w-3xl mx-auto px-5">
-                <p class="text-brand-DEFAULT font-semibold mb-3" style="font-size:0.75rem;letter-spacing:0.22em;">JUST FOR CAKES</p>
-                <h1 class="font-elegant font-semibold text-brand-DEFAULT mb-5"
-                    style="font-size:clamp(2.4rem,6vw,4rem);letter-spacing:0.01em;line-height:1.1;">
-                    Our Signature Bakes
-                </h1>
-                <p class="text-brand-DEFAULT opacity-90" style="font-size:1.05rem;line-height:1.8;">
-                    Handcrafted with perfection for your most special moments.
-                </p>
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="premium-card"><div class="h-72 overflow-hidden rounded-t-[1.5rem]"><img src="490019632_1449303516343491_225561430116422405_n.jpg" class="w-full h-full object-cover"></div><div class="p-8 text-center"><h4 class="font-serif text-2xl font-semibold text-gray-900 mb-2">Elegant Celebration</h4><p class="text-brand-DEFAULT font-semibold text-xl mb-6">₹1200/kg</p><a onclick="navTo('home','contact')" class="btn-solid w-full">Order Now</a></div></div>
+                <div class="premium-card"><div class="h-72 overflow-hidden rounded-t-[1.5rem]"><img src="493504641_1464427984831044_4455884902004233999_n.jpg" class="w-full h-full object-cover"></div><div class="p-8 text-center"><h4 class="font-serif text-2xl font-semibold text-gray-900 mb-2">Superhero Web</h4><p class="text-brand-DEFAULT font-semibold text-xl mb-6">₹950/kg</p><a onclick="navTo('home','contact')" class="btn-solid w-full">Order Now</a></div></div>
+                <div class="premium-card"><div class="h-72 overflow-hidden rounded-t-[1.5rem]"><img src="489463079_1448665063074003_9170913617709119392_n.jpg" class="w-full h-full object-cover"></div><div class="p-8 text-center"><h4 class="font-serif text-2xl font-semibold text-gray-900 mb-2">Cocomelon Theme</h4><p class="text-brand-DEFAULT font-semibold text-xl mb-6">₹1100/kg</p><a onclick="navTo('home','contact')" class="btn-solid w-full">Order Now</a></div></div>
+                <div class="premium-card"><div class="h-72 overflow-hidden rounded-t-[1.5rem]"><img src="488253758_1442571063683403_4251100749907473567_n.jpg" class="w-full h-full object-cover"></div><div class="p-8 text-center"><h4 class="font-serif text-2xl font-semibold text-gray-900 mb-2">Premium Red Velvet</h4><p class="text-brand-DEFAULT font-semibold text-xl mb-6">₹1000/kg</p><a onclick="navTo('home','contact')" class="btn-solid w-full">Order Now</a></div></div>
+                <div class="premium-card"><div class="h-72 overflow-hidden rounded-t-[1.5rem]"><img src="489305956_1448665259740650_3549309140238958396_n.jpg" class="w-full h-full object-cover"></div><div class="p-8 text-center"><h4 class="font-serif text-2xl font-semibold text-gray-900 mb-2">Baby Shower Cake</h4><p class="text-brand-DEFAULT font-semibold text-xl mb-6">₹1150/kg</p><a onclick="navTo('home','contact')" class="btn-solid w-full">Order Now</a></div></div>
             </div>
         </div>
+    </section>
+</div>
 
-        <section id="cakes-section" class="pb-24 pt-10 min-h-[60vh]">
-            <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-
-                <!-- Controls -->
-                <div class="flex justify-between items-center mb-6 px-1">
-                    <p class="glass-badge inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold" style="letter-spacing:0.14em;">
-                        <i data-lucide="move-horizontal" class="w-3.5 h-3.5"></i> Swipe to explore
-                    </p>
-                    <div class="flex gap-3">
-                        <button id="cake-left"  class="btn-glass-arrow" aria-label="Scroll left">&#8592;</button>
-                        <button id="cake-right" class="btn-glass-arrow" aria-label="Scroll right">&#8594;</button>
-                    </div>
-                </div>
-
-                <!-- Carousel -->
-                <div class="scroll-container-wrap">
-                    <div id="cake-scroll" class="scroll-content flex gap-6 pb-6 hide-scrollbar">
-
-                        <!-- Cake 1 -->
-                        <div class="cake-card rounded-2xl overflow-hidden image-zoom group flex flex-col min-w-[290px] md:min-w-[320px] max-w-[320px] shrink-0 border-brand-DEFAULT/10">
-                            <div class="h-64 overflow-hidden relative border-b border-brand-DEFAULT/10">
-                                <img src="490019632_1449303516343491_225561430116422405_n.jpg" loading="lazy"
-                                     onerror="this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?q=80&w=800&auto=format&fit=crop'"
-                                     alt="Elegant Wedding Cakes" class="w-full h-full object-cover">
-                                <div class="glass-badge-red absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold shadow-md">Bestseller</div>
-                            </div>
-                            <div class="p-6 flex flex-col flex-grow">
-                                <h4 class="font-elegant font-semibold text-brand-DEFAULT mb-2" style="font-size:1.25rem;">Elegant Celebration Cake</h4>
-                                <p class="text-brand-DEFAULT opacity-90 flex-grow" style="font-size:0.88rem;line-height:1.7;">Beautifully crafted multi-tier cakes with delicate roses and pearls.</p>
-                                <div class="mt-5 pt-5 border-t border-brand-DEFAULT/10 flex justify-between items-center">
-                                    <span class="font-elegant font-semibold text-brand-DEFAULT" style="font-size:1.3rem;">₹ 1,200 <span style="font-size:0.75rem;font-weight:400;font-family:'Poppins',sans-serif;">/ kg</span></span>
-                                    <a onclick="navTo('home', 'contact')" class="btn-glass btn-glass-sm cursor-pointer">Order</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Cake 2 -->
-                        <div class="cake-card rounded-2xl overflow-hidden image-zoom group flex flex-col min-w-[290px] md:min-w-[320px] max-w-[320px] shrink-0 border-brand-DEFAULT/10">
-                            <div class="h-64 overflow-hidden relative border-b border-brand-DEFAULT/10">
-                                <img src="493504641_1464427984831044_4455884902004233999_n.jpg" loading="lazy"
-                                     onerror="this.src='https://images.unsplash.com/photo-1557925923-33b251dc32a6?q=80&w=800&auto=format&fit=crop'"
-                                     alt="Superhero Theme Cakes" class="w-full h-full object-cover">
-                            </div>
-                            <div class="p-6 flex flex-col flex-grow">
-                                <h4 class="font-elegant font-semibold text-brand-DEFAULT mb-2" style="font-size:1.25rem;">Superhero Web Cake</h4>
-                                <p class="text-brand-DEFAULT opacity-90 flex-grow" style="font-size:0.88rem;line-height:1.7;">Vibrant Spiderman design perfect for kids' birthdays.</p>
-                                <div class="mt-5 pt-5 border-t border-brand-DEFAULT/10 flex justify-between items-center">
-                                    <span class="font-elegant font-semibold text-brand-DEFAULT" style="font-size:1.3rem;">₹ 950 <span style="font-size:0.75rem;font-weight:400;font-family:'Poppins',sans-serif;">/ kg</span></span>
-                                    <a onclick="navTo('home', 'contact')" class="btn-glass btn-glass-sm cursor-pointer">Order</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Cake 3 -->
-                        <div class="cake-card rounded-2xl overflow-hidden image-zoom group flex flex-col min-w-[290px] md:min-w-[320px] max-w-[320px] shrink-0 border-brand-DEFAULT/10">
-                            <div class="h-64 overflow-hidden relative border-b border-brand-DEFAULT/10">
-                                <img src="489463079_1448665063074003_9170913617709119392_n.jpg" loading="lazy"
-                                     onerror="this.src='https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80&w=800&auto=format&fit=crop'"
-                                     alt="Cocomelon Kids Cake" class="w-full h-full object-cover">
-                            </div>
-                            <div class="p-6 flex flex-col flex-grow">
-                                <h4 class="font-elegant font-semibold text-brand-DEFAULT mb-2" style="font-size:1.25rem;">Cocomelon Theme Cake</h4>
-                                <p class="text-brand-DEFAULT opacity-90 flex-grow" style="font-size:0.88rem;line-height:1.7;">Fun, fully customized fondant cakes featuring cartoon characters.</p>
-                                <div class="mt-5 pt-5 border-t border-brand-DEFAULT/10 flex justify-between items-center">
-                                    <span class="font-elegant font-semibold text-brand-DEFAULT" style="font-size:1.3rem;">₹ 1,100 <span style="font-size:0.75rem;font-weight:400;font-family:'Poppins',sans-serif;">/ kg</span></span>
-                                    <a onclick="navTo('home', 'contact')" class="btn-glass btn-glass-sm cursor-pointer">Order</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Cake 4 -->
-                        <div class="cake-card rounded-2xl overflow-hidden image-zoom group flex flex-col min-w-[290px] md:min-w-[320px] max-w-[320px] shrink-0 border-brand-DEFAULT/10">
-                            <div class="h-64 overflow-hidden relative border-b border-brand-DEFAULT/10">
-                                <img src="488253758_1442571063683403_4251100749907473567_n.jpg" loading="lazy"
-                                     onerror="this.src='https://images.unsplash.com/photo-1616541823729-00fe0aacd32c?q=80&w=800&auto=format&fit=crop'"
-                                     alt="Red Velvet Cake" class="w-full h-full object-cover">
-                            </div>
-                            <div class="p-6 flex flex-col flex-grow">
-                                <h4 class="font-elegant font-semibold text-brand-DEFAULT mb-2" style="font-size:1.25rem;">Premium Red Velvet</h4>
-                                <p class="text-brand-DEFAULT opacity-90 flex-grow" style="font-size:0.88rem;line-height:1.7;">Luxurious red velvet with smooth cream cheese frosting.</p>
-                                <div class="mt-5 pt-5 border-t border-brand-DEFAULT/10 flex justify-between items-center">
-                                    <span class="font-elegant font-semibold text-brand-DEFAULT" style="font-size:1.3rem;">₹ 1,000 <span style="font-size:0.75rem;font-weight:400;font-family:'Poppins',sans-serif;">/ kg</span></span>
-                                    <a onclick="navTo('home', 'contact')" class="btn-glass btn-glass-sm cursor-pointer">Order</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Cake 5 -->
-                        <div class="cake-card rounded-2xl overflow-hidden image-zoom group flex flex-col min-w-[290px] md:min-w-[320px] max-w-[320px] shrink-0 border-brand-DEFAULT/10">
-                            <div class="h-64 overflow-hidden relative border-b border-brand-DEFAULT/10">
-                                <img src="489305956_1448665259740650_3549309140238958396_n.jpg" loading="lazy"
-                                     onerror="this.src='https://images.unsplash.com/photo-1558961363-fa8fdf82db35?q=80&w=800&auto=format&fit=crop'"
-                                     alt="Custom Fondant Cake" class="w-full h-full object-cover">
-                            </div>
-                            <div class="p-6 flex flex-col flex-grow">
-                                <h4 class="font-elegant font-semibold text-brand-DEFAULT mb-2" style="font-size:1.25rem;">Custom Baby Shower</h4>
-                                <p class="text-brand-DEFAULT opacity-90 flex-grow" style="font-size:0.88rem;line-height:1.7;">Beautiful fondant designs to celebrate your newest arrival.</p>
-                                <div class="mt-5 pt-5 border-t border-brand-DEFAULT/10 flex justify-between items-center">
-                                    <span class="font-elegant font-semibold text-brand-DEFAULT" style="font-size:1.3rem;">₹ 1,150 <span style="font-size:0.75rem;font-weight:400;font-family:'Poppins',sans-serif;">/ kg</span></span>
-                                    <a onclick="navTo('home', 'contact')" class="btn-glass btn-glass-sm cursor-pointer">Order</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Cake 6 -->
-                        <div class="cake-card rounded-2xl overflow-hidden image-zoom group flex flex-col min-w-[290px] md:min-w-[320px] max-w-[320px] shrink-0 border-brand-DEFAULT/10">
-                            <div class="h-64 overflow-hidden relative border-b border-brand-DEFAULT/10">
-                                <img src="https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?q=80&w=800&auto=format&fit=crop" loading="lazy" alt="Classic Black Forest" class="w-full h-full object-cover">
-                            </div>
-                            <div class="p-6 flex flex-col flex-grow">
-                                <h4 class="font-elegant font-semibold text-brand-DEFAULT mb-2" style="font-size:1.25rem;">Classic Black Forest</h4>
-                                <p class="text-brand-DEFAULT opacity-90 flex-grow" style="font-size:0.88rem;line-height:1.7;">The all-time favourite chocolate sponge with fresh cream and cherries.</p>
-                                <div class="mt-5 pt-5 border-t border-brand-DEFAULT/10 flex justify-between items-center">
-                                    <span class="font-elegant font-semibold text-brand-DEFAULT" style="font-size:1.3rem;">₹ 850 <span style="font-size:0.75rem;font-weight:400;font-family:'Poppins',sans-serif;">/ kg</span></span>
-                                    <a onclick="navTo('home', 'contact')" class="btn-glass btn-glass-sm cursor-pointer">Order</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="text-center mt-12">
-                    <a onclick="navTo('home', 'contact')" class="btn-glass text-base px-10 py-4 cursor-pointer">
-                        Order a Custom Cake <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
+<div id="view-desserts" class="page-view hidden">
+    <div class="pt-40 pb-20 text-center bg-gray-50">
+        <h1 class="font-elegant text-6xl font-semibold text-gray-900">Sweet Indulgences</h1>
+        <p class="text-gray-500 mt-4 text-lg">End your day on a sweet note</p>
     </div>
-
-    <!-- ========================================================= -->
-    <!--                       VIEW: DESSERTS                      -->
-    <!-- ========================================================= -->
-    <div id="view-desserts" class="page-view hidden">
-        <div class="page-hero pt-32 pb-14 text-center">
-            <div class="max-w-3xl mx-auto px-5">
-                <p class="text-brand-DEFAULT font-semibold mb-3" style="font-size:0.75rem;letter-spacing:0.22em;">JUST DESSERTS</p>
-                <h1 class="font-elegant font-semibold text-brand-DEFAULT mb-5"
-                    style="font-size:clamp(2.4rem,6vw,4rem);letter-spacing:0.01em;line-height:1.1;">
-                    Sweet Indulgences
-                </h1>
-                <p class="text-brand-DEFAULT opacity-90" style="font-size:1.05rem;line-height:1.8;">
-                    Treat yourself to our rich, mouth-watering desserts — crafted to satisfy every sweet craving.
-                </p>
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="premium-card"><div class="h-72 overflow-hidden rounded-t-[1.5rem]"><img src="490517089_1452274292713080_3072637725145829695_n.jpg" class="w-full h-full object-cover"></div><div class="p-8 text-center"><h4 class="font-serif text-2xl font-semibold text-gray-900 mb-2">Sizzling Brownie</h4><p class="text-brand-DEFAULT font-semibold text-xl mb-6">₹180</p><a onclick="navTo('home','contact')" class="btn-solid w-full">Order Now</a></div></div>
+                <div class="premium-card"><div class="h-72 overflow-hidden rounded-t-[1.5rem]"><img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=600&auto=format" class="w-full h-full object-cover"></div><div class="p-8 text-center"><h4 class="font-serif text-2xl font-semibold text-gray-900 mb-2">Royal Falooda</h4><p class="text-brand-DEFAULT font-semibold text-xl mb-6">₹150</p><a onclick="navTo('home','contact')" class="btn-solid w-full">Order Now</a></div></div>
+                <div class="premium-card"><div class="h-72 overflow-hidden rounded-t-[1.5rem]"><img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=600&auto=format" class="w-full h-full object-cover"></div><div class="p-8 text-center"><h4 class="font-serif text-2xl font-semibold text-gray-900 mb-2">Mango Mousse</h4><p class="text-brand-DEFAULT font-semibold text-xl mb-6">₹120</p><a onclick="navTo('home','contact')" class="btn-solid w-full">Order Now</a></div></div>
+                <div class="premium-card"><div class="h-72 overflow-hidden rounded-t-[1.5rem]"><img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=600&auto=format" class="w-full h-full object-cover"></div><div class="p-8 text-center"><h4 class="font-serif text-2xl font-semibold text-gray-900 mb-2">Classic Tiramisu</h4><p class="text-brand-DEFAULT font-semibold text-xl mb-6">₹160</p><a onclick="navTo('home','contact')" class="btn-solid w-full">Order Now</a></div></div>
+                <div class="premium-card"><div class="h-72 overflow-hidden rounded-t-[1.5rem]"><img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&auto=format" class="w-full h-full object-cover"></div><div class="p-8 text-center"><h4 class="font-serif text-2xl font-semibold text-gray-900 mb-2">Gulab Jamun</h4><p class="text-brand-DEFAULT font-semibold text-xl mb-6">₹90</p><a onclick="navTo('home','contact')" class="btn-solid w-full">Order Now</a></div></div>
             </div>
         </div>
+    </section>
+</div>
 
-        <section id="desserts-section" class="pb-24 pt-10 min-h-[60vh]">
-            <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-                <!-- Controls -->
-                <div class="flex justify-between items-center mb-6 px-1">
-                    <p class="glass-badge inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold" style="letter-spacing:0.14em;">
-                        <i data-lucide="move-horizontal" class="w-3.5 h-3.5"></i> Swipe to explore
-                    </p>
-                    <div class="flex gap-3">
-                        <button id="dessert-left"  class="btn-glass-arrow" aria-label="Scroll left">&#8592;</button>
-                        <button id="dessert-right" class="btn-glass-arrow" aria-label="Scroll right">&#8594;</button>
-                    </div>
-                </div>
-
-                <!-- Carousel -->
-                <div class="scroll-container-wrap">
-                    <div id="dessert-scroll" class="scroll-content flex gap-6 pb-6 hide-scrollbar">
-
-                        <!-- Dessert 1 -->
-                        <div class="dessert-card rounded-2xl overflow-hidden image-zoom group flex flex-col min-w-[290px] md:min-w-[320px] max-w-[320px] shrink-0 border-brand-DEFAULT/10">
-                            <div class="h-64 overflow-hidden relative border-b border-brand-DEFAULT/10">
-                                <img src="490517089_1452274292713080_3072637725145829695_n.jpg" loading="lazy"
-                                     onerror="this.src='https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=800&auto=format&fit=crop'"
-                                     alt="Decadent Brownie Delight" class="w-full h-full object-cover">
-                                <div class="glass-badge-red absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold shadow-md">Chef's Pick</div>
-                            </div>
-                            <div class="p-6 flex flex-col flex-grow">
-                                <h4 class="font-elegant font-semibold text-brand-DEFAULT mb-2" style="font-size:1.25rem;">Sizzling Brownie Delight</h4>
-                                <p class="text-brand-DEFAULT opacity-90 flex-grow" style="font-size:0.88rem;line-height:1.7;">Warm chocolate brownie topped with ice cream, nuts, and syrup.</p>
-                                <div class="mt-5 pt-5 border-t border-brand-DEFAULT/10 flex justify-between items-center">
-                                    <span class="font-elegant font-semibold text-brand-DEFAULT" style="font-size:1.3rem;">₹ 180</span>
-                                    <a onclick="navTo('home', 'contact')" class="btn-glass btn-glass-sm cursor-pointer">Order</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Dessert 2 -->
-                        <div class="dessert-card rounded-2xl overflow-hidden image-zoom group flex flex-col min-w-[290px] md:min-w-[320px] max-w-[320px] shrink-0 border-brand-DEFAULT/10">
-                            <div class="h-64 overflow-hidden relative border-b border-brand-DEFAULT/10">
-                                <img src="https://images.unsplash.com/photo-1572490122747-3968b75cc699?q=80&w=800&auto=format&fit=crop" loading="lazy" alt="Royal Falooda" class="w-full h-full object-cover">
-                            </div>
-                            <div class="p-6 flex flex-col flex-grow">
-                                <h4 class="font-elegant font-semibold text-brand-DEFAULT mb-2" style="font-size:1.25rem;">Royal Falooda</h4>
-                                <p class="text-brand-DEFAULT opacity-90 flex-grow" style="font-size:0.88rem;line-height:1.7;">Our iconic Falooda loaded with fresh fruits, jelly, nuts, and ice cream.</p>
-                                <div class="mt-5 pt-5 border-t border-brand-DEFAULT/10 flex justify-between items-center">
-                                    <span class="font-elegant font-semibold text-brand-DEFAULT" style="font-size:1.3rem;">₹ 150</span>
-                                    <a onclick="navTo('home', 'contact')" class="btn-glass btn-glass-sm cursor-pointer">Order</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Dessert 3 -->
-                        <div class="dessert-card rounded-2xl overflow-hidden image-zoom group flex flex-col min-w-[290px] md:min-w-[320px] max-w-[320px] shrink-0 border-brand-DEFAULT/10">
-                            <div class="h-64 overflow-hidden relative border-b border-brand-DEFAULT/10">
-                                <img src="mango_mousse.jpg" loading="lazy"
-                                     onerror="this.src='https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=800&auto=format&fit=crop'"
-                                     alt="Mango Mousse" class="w-full h-full object-cover">
-                            </div>
-                            <div class="p-6 flex flex-col flex-grow">
-                                <h4 class="font-elegant font-semibold text-brand-DEFAULT mb-2" style="font-size:1.25rem;">Mango Dessert Mousse</h4>
-                                <p class="text-brand-DEFAULT opacity-90 flex-grow" style="font-size:0.88rem;line-height:1.7;">Light and airy mango flavored cream dessert layered with pure fruit chunks.</p>
-                                <div class="mt-5 pt-5 border-t border-brand-DEFAULT/10 flex justify-between items-center">
-                                    <span class="font-elegant font-semibold text-brand-DEFAULT" style="font-size:1.3rem;">₹ 120</span>
-                                    <a onclick="navTo('home', 'contact')" class="btn-glass btn-glass-sm cursor-pointer">Order</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Dessert 4 -->
-                        <div class="dessert-card rounded-2xl overflow-hidden image-zoom group flex flex-col min-w-[290px] md:min-w-[320px] max-w-[320px] shrink-0 border-brand-DEFAULT/10">
-                            <div class="h-64 overflow-hidden relative border-b border-brand-DEFAULT/10">
-                                <img src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?q=80&w=800&auto=format&fit=crop" loading="lazy" alt="Tiramisu" class="w-full h-full object-cover">
-                            </div>
-                            <div class="p-6 flex flex-col flex-grow">
-                                <h4 class="font-elegant font-semibold text-brand-DEFAULT mb-2" style="font-size:1.25rem;">Classic Tiramisu</h4>
-                                <p class="text-brand-DEFAULT opacity-90 flex-grow" style="font-size:0.88rem;line-height:1.7;">Coffee-flavored Italian dessert made of ladyfingers dipped in coffee.</p>
-                                <div class="mt-5 pt-5 border-t border-brand-DEFAULT/10 flex justify-between items-center">
-                                    <span class="font-elegant font-semibold text-brand-DEFAULT" style="font-size:1.3rem;">₹ 160</span>
-                                    <a onclick="navTo('home', 'contact')" class="btn-glass btn-glass-sm cursor-pointer">Order</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Dessert 5 -->
-                        <div class="dessert-card rounded-2xl overflow-hidden image-zoom group flex flex-col min-w-[290px] md:min-w-[320px] max-w-[320px] shrink-0 border-brand-DEFAULT/10">
-                            <div class="h-64 overflow-hidden relative border-b border-brand-DEFAULT/10">
-                                <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?q=80&w=800&auto=format&fit=crop" loading="lazy" alt="Gulab Jamun" class="w-full h-full object-cover">
-                            </div>
-                            <div class="p-6 flex flex-col flex-grow">
-                                <h4 class="font-elegant font-semibold text-brand-DEFAULT mb-2" style="font-size:1.25rem;">Gulab Jamun Delight</h4>
-                                <p class="text-brand-DEFAULT opacity-90 flex-grow" style="font-size:0.88rem;line-height:1.7;">Soft, melt-in-your-mouth gulab jamuns served warm with rose-scented syrup.</p>
-                                <div class="mt-5 pt-5 border-t border-brand-DEFAULT/10 flex justify-between items-center">
-                                    <span class="font-elegant font-semibold text-brand-DEFAULT" style="font-size:1.3rem;">₹ 90</span>
-                                    <a onclick="navTo('home', 'contact')" class="btn-glass btn-glass-sm cursor-pointer">Order</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="text-center mt-12">
-                    <a onclick="navTo('home', 'contact')" class="btn-glass text-base px-10 py-4 cursor-pointer">
-                        Order Your Favourite <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
+<div id="view-snacks" class="page-view hidden">
+    <div class="pt-40 pb-20 text-center bg-gray-50">
+        <h1 class="font-elegant text-6xl font-semibold text-gray-900">Savory Snacks</h1>
+        <p class="text-gray-500 mt-4 text-lg">Crispy, spicy, and perfectly baked</p>
     </div>
-
-    <!-- ===================== SHARED FOOTER ===================== -->
-    <footer class="matte-footer pt-16 pb-8">
-        <div class="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-
-                <!-- Brand -->
-                <div class="col-span-1 lg:col-span-1">
-                    <a onclick="navTo('home')" class="flex items-center gap-3 mb-5 cursor-pointer">
-                        <img src="340373253_1417780449033746_7542344205153847137_n.jpg" loading="lazy"
-                             onerror="this.src='https://ui-avatars.com/api/?name=IB&background=c2600a&color=fff'"
-                             alt="Indian Bakery Logo"
-                             class="h-20 w-auto rounded-xl shadow-md border border-brand-DEFAULT/20">
-                    </a>
-                    <p class="text-brand-DEFAULT opacity-90 mb-6 leading-relaxed" style="font-size:0.88rem;line-height:1.8;">
-                        Thodupuzha's favourite destination for premium baked goods. Founded by Mr. V. T. Joseph, with a long and proud history of 45 years.
-                    </p>
-                    <div class="flex space-x-3">
-                        <a href="https://www.facebook.com/indianbakerythodupuzha/" target="_blank" aria-label="Facebook"
-                           class="social-icon w-10 h-10 flex items-center justify-center rounded-full">
-                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M22 12.07C22 6.48 17.52 2 12 2S2 6.48 2 12.07c0 4.99 3.66 9.13 8.44 9.93v-7.03H7.9v-2.9h2.54V9.41c0-2.5 1.5-3.88 3.78-3.88 1.1 0 2.25.2 2.25.2v2.48h-1.27c-1.25 0-1.64.78-1.64 1.57v1.88h2.8l-.45 2.9h-2.35V22c4.78-.8 8.44-4.94 8.44-9.93z"/></svg>
-                        </a>
-                        <a href="https://www.instagram.com/indianbakery38/" target="_blank" aria-label="Instagram"
-                           class="social-icon w-10 h-10 flex items-center justify-center rounded-full">
-                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M7.75 2C4.57 2 2 4.57 2 7.75v8.5C2 19.43 4.57 22 7.75 22h8.5c3.18 0 5.75-2.57 5.75-5.75v-8.5C22 4.57 19.43 2 16.25 2h-8.5zm4.25 4.5A5.75 5.75 0 1 1 6.25 12 5.75 5.75 0 0 1 12 6.5zm0 2A3.75 3.75 0 1 0 15.75 12 3.75 3.75 0 0 0 12 8.5zm5.25-.88a1.12 1.12 0 1 1-1.12 1.13 1.12 1.12 0 0 1 1.12-1.13z"/></svg>
-                        </a>
-                        <a href="https://wa.me/919846699555" target="_blank" aria-label="WhatsApp"
-                           class="social-icon w-10 h-10 flex items-center justify-center rounded-full">
-                            <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12.04 2A9.93 9.93 0 0 0 3 16.95L2 22l5.2-1.36A9.96 9.96 0 1 0 12.04 2zm4.39 13.44c-.24-.12-1.41-.7-1.63-.78s-.38-.12-.54.12-.62.78-.76.94-.28.18-.52.06a6.6 6.6 0 0 1-1.94-1.2 7.3 7.3 0 0 1-1.35-1.67c-.14-.24 0-.37.11-.49l.36-.42.24-.4a.45.45 0 0 0 0-.42c-.06-.12-.54-1.3-.74-1.78s-.39-.41-.54-.42h-.46a.88.88 0 0 0-.64.3 2.68 2.68 0 0 0-.83 2 4.67 4.67 0 0 0 1 2.48 10.7 10.7 0 0 0 4.1 3.81c.57.25 1 .4 1.35.51a3.24 3.24 0 0 0 1.49.09 2.42 2.42 0 0 0 1.58-1.12 2 2 0 0 0 .14-1.12c-.06-.1-.22-.16-.46-.28z"/></svg>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Quick Links -->
-                <div>
-                    <h4 class="text-brand-DEFAULT font-semibold mb-6" style="font-size:0.75rem;letter-spacing:0.2em;">QUICK LINKS</h4>
-                    <ul class="space-y-3">
-                        <li><a onclick="navTo('home')" class="cursor-pointer footer-link text-brand-DEFAULT hover:opacity-75 transition-all duration-200 hover:tracking-wide flex items-center gap-2" style="font-size:0.88rem;"><i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-60"></i> Home</a></li>
-                        <li><a onclick="navTo('home', 'about')" class="cursor-pointer footer-link text-brand-DEFAULT hover:opacity-75 transition-all duration-200 hover:tracking-wide flex items-center gap-2" style="font-size:0.88rem;"><i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-60"></i> About Us</a></li>
-                        <li><a onclick="navTo('cakes')" class="cursor-pointer footer-link text-brand-DEFAULT hover:opacity-75 transition-all duration-200 hover:tracking-wide flex items-center gap-2" style="font-size:0.88rem;"><i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-60"></i> Cakes Menu</a></li>
-                        <li><a onclick="navTo('desserts')" class="cursor-pointer footer-link text-brand-DEFAULT hover:opacity-75 transition-all duration-200 hover:tracking-wide flex items-center gap-2" style="font-size:0.88rem;"><i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-60"></i> Desserts</a></li>
-                        <li><a onclick="navTo('home', 'contact')" class="cursor-pointer footer-link text-brand-DEFAULT hover:opacity-75 transition-all duration-200 hover:tracking-wide flex items-center gap-2" style="font-size:0.88rem;"><i data-lucide="chevron-right" class="w-3.5 h-3.5 opacity-60"></i> Contact & Orders</a></li>
-                    </ul>
-                </div>
-
-                <!-- Newsletter -->
-                <div>
-                    <h4 class="text-brand-DEFAULT font-semibold mb-6" style="font-size:0.75rem;letter-spacing:0.2em;">JOIN OUR FAMILY</h4>
-                    <p class="text-brand-DEFAULT opacity-90 mb-5 leading-relaxed" style="font-size:0.88rem;line-height:1.7;">Subscribe for seasonal cake updates and festival offers!</p>
-                    <div class="flex overflow-hidden rounded-xl border border-brand-DEFAULT/20 shadow-sm" style="background:rgba(255,255,255,0.45);backdrop-filter:blur(10px);">
-                        <input type="email" placeholder="Your email address"
-                               class="bg-transparent border-none text-brand-DEFAULT px-4 py-3 focus:outline-none w-full text-sm placeholder:text-brand-DEFAULT/50">
-                        <button class="btn-glass rounded-none px-4" style="border-radius:0 0.75rem 0.75rem 0;backdrop-filter:none;border:none;">
-                            <i data-lucide="send" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Map -->
-                <div>
-                    <h4 class="text-brand-DEFAULT font-semibold mb-6" style="font-size:0.75rem;letter-spacing:0.2em;">FIND US HERE</h4>
-                    <div class="rounded-2xl overflow-hidden border border-brand-DEFAULT/20 shadow-md h-40">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62916.34731333792!2d76.66699863740156!3d9.897354930607873!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b07cf0fdf587c2b%3A0xc3bc07677d2a5c53!2sThodupuzha%2C%20Kerala!5e0!3m2!1sen!2sin!4v1714000000000!5m2!1sen!2sin"
-                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-                    </div>
-                </div>
-            </div>
-
-            <div class="border-t border-brand-DEFAULT/20 pt-8 flex flex-col md:flex-row justify-between items-center" style="font-size:0.8rem;">
-                <p class="text-brand-DEFAULT opacity-80">&copy; 2026 Indian Bakery, Thodupuzha. All rights reserved.</p>
-                <p class="mt-2 md:mt-0 flex items-center text-brand-DEFAULT opacity-80 gap-1">
-                    Designed with <i data-lucide="heart" class="w-3.5 h-3.5 text-brand-DEFAULT fill-current"></i> for great taste.
-                </p>
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="premium-card"><div class="h-72 overflow-hidden rounded-t-[1.5rem]"><img src="490132153_1452522552688254_2895289336128599183_n.jpg" class="w-full h-full object-cover"></div><div class="p-8 text-center"><h4 class="font-serif text-2xl font-semibold text-gray-900 mb-2">Cheesy Loaded Fries</h4><p class="text-brand-DEFAULT font-semibold text-xl mb-2">₹220</p></div></div>
+                <div class="premium-card"><div class="h-72 overflow-hidden rounded-t-[1.5rem]"><img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?w=600&auto=format" class="w-full h-full object-cover"></div><div class="p-8 text-center"><h4 class="font-serif text-2xl font-semibold text-gray-900 mb-2">Evening Puffs</h4><p class="text-brand-DEFAULT font-semibold text-xl mb-2">₹30</p></div></div>
+                <div class="premium-card"><div class="h-72 overflow-hidden rounded-t-[1.5rem]"><img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&auto=format" class="w-full h-full object-cover"></div><div class="p-8 text-center"><h4 class="font-serif text-2xl font-semibold text-gray-900 mb-2">Samosa</h4><p class="text-brand-DEFAULT font-semibold text-xl mb-2">₹25</p></div></div>
+                <div class="premium-card"><div class="h-72 overflow-hidden rounded-t-[1.5rem]"><img src="https://images.unsplash.com/photo-1625938144755-6b6f0da0f9b2?w=600&auto=format" class="w-full h-full object-cover"></div><div class="p-8 text-center"><h4 class="font-serif text-2xl font-semibold text-gray-900 mb-2">Veg Cutlet</h4><p class="text-brand-DEFAULT font-semibold text-xl mb-2">₹40</p></div></div>
             </div>
         </div>
-    </footer>
+    </section>
+</div>
 
-    <!-- ===================== SCRIPTS ===================== -->
-    <script>
-        // ---- PRELOADER ----
-        const hidePreloader = () => {
+<footer class="bg-white border-t border-gray-200 pt-20 pb-10">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+        <div class="grid md:grid-cols-4 gap-12 mb-16">
+            
+            <div>
+                <div class="flex items-center gap-3 mb-6">
+                    <img src="340373253_1417780449033746_7542344205153847137_n.jpg" class="h-14 w-auto rounded-lg shadow-sm" onerror="this.src='https://ui-avatars.com/api/?name=IB&background=fff&color=FF8B2C'">
+                    <span class="font-serif text-3xl font-semibold text-gray-900">Indian Bakery.</span>
+                </div>
+                <p class="text-gray-500 text-sm leading-relaxed mb-8">Thodupuzha's favourite destination for premium baked goods since 45 years.</p>
+                
+                <div class="flex gap-4">
+                    <a href="https://www.instagram.com/indianbakery38/" target="_blank" class="social-icon" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="https://www.facebook.com/" target="_blank" class="social-icon" aria-label="Facebook">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div>
+                <h4 class="font-sans font-bold tracking-widest text-gray-900 text-sm mb-6 uppercase">Quick Links</h4>
+                <ul class="space-y-3">
+                    <li><a onclick="navTo('home')" class="text-gray-500 hover:text-brand-DEFAULT cursor-pointer transition font-medium">Home</a></li>
+                    <li><a onclick="navTo('home','about')" class="text-gray-500 hover:text-brand-DEFAULT cursor-pointer transition font-medium">Our Story</a></li>
+                    <li><a onclick="navTo('cakes')" class="text-gray-500 hover:text-brand-DEFAULT cursor-pointer transition font-medium">Cakes</a></li>
+                    <li><a onclick="navTo('desserts')" class="text-gray-500 hover:text-brand-DEFAULT cursor-pointer transition font-medium">Desserts</a></li>
+                    <li><a onclick="navTo('snacks')" class="text-gray-500 hover:text-brand-DEFAULT cursor-pointer transition font-medium">Snacks</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="font-sans font-bold tracking-widest text-gray-900 text-sm mb-6 uppercase">Contact</h4>
+                <ul class="space-y-3 text-gray-500 font-medium">
+                    <li>Thodupuzha town, Kerala</li>
+                    <li><a href="tel:+919846699555" class="hover:text-brand-DEFAULT transition">+91 98466 99555</a></li>
+                    <li><a href="mailto:hello@indianbakery.com" class="hover:text-brand-DEFAULT transition">hello@indianbakery.com</a></li>
+                </ul>
+            </div>
+            
+            <div>
+                <h4 class="font-sans font-bold tracking-widest text-gray-900 text-sm mb-6 uppercase">Find Us</h4>
+                <div class="rounded-2xl overflow-hidden h-40 border border-gray-200 shadow-sm">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62916.34731333792!2d76.66699863740156!3d9.897354930607873!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b07cf0fdf587c2b%3A0xc3bc07677d2a5c53!2sThodupuzha%2C%20Kerala!5e0!3m2!1sen!2sin!4v1714000000000!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="text-gray-400 text-sm font-medium">
+                © 2026 Indian Bakery, Thodupuzha. All rights reserved.
+            </div>
+            <div class="text-gray-400 text-sm font-medium flex items-center gap-1">
+                Crafted with <i data-lucide="heart" class="w-4 h-4 text-brand-DEFAULT fill-current"></i> for great taste.
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Premium Preloader Logic
+    const hidePreloader = () => { 
+        setTimeout(() => { 
+            const el = document.getElementById('preloader'); 
+            if(el) el.classList.add('fade-out'); 
+        }, 2200);
+    };
+    if(document.readyState === 'complete') hidePreloader(); 
+    else { window.addEventListener('load', hidePreloader); setTimeout(hidePreloader, 4000); }
+    
+    // Lucide icons init
+    document.addEventListener("DOMContentLoaded", () => lucide.createIcons());
+    
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+        const nav = document.getElementById('navbar');
+        if (window.scrollY > 20) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+    });
+
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
+        document.getElementById('mobile-menu')?.classList.toggle('hidden');
+    });
+    
+    // SPA navigation WITH History API support
+    function navTo(viewId, sectionId = null, pushState = true) {
+        document.querySelectorAll('.page-view').forEach(el => { el.classList.add('hidden'); el.classList.remove('block'); });
+        const target = document.getElementById('view-' + viewId);
+        if(target) { target.classList.remove('hidden'); target.classList.add('block'); }
+        document.getElementById('mobile-menu')?.classList.add('hidden');
+
+        // Manage Browser History
+        if (pushState) {
+            history.pushState({ viewId, sectionId }, '', `#${viewId}`);
+        }
+
+        if(sectionId) {
             setTimeout(() => {
-                const preloader = document.getElementById('preloader');
-                if (preloader) preloader.classList.add('fade-out');
-            }, 500); 
-        };
-
-        if (document.readyState === 'complete') {
-            hidePreloader();
-        } else {
-            window.addEventListener('load', hidePreloader);
-            setTimeout(hidePreloader, 2000); 
-        }
-
-        // ---- LUCIDE ICONS ----
-        lucide.createIcons();
-
-        // ---- NAVBAR SCROLL ----
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 60) {
-                navbar.classList.add('glass-nav', 'py-2');
-                navbar.classList.remove('py-3');
-            } else {
-                navbar.classList.remove('py-2');
-                navbar.classList.add('py-3');
-            }
-        });
-
-        // ---- MOBILE MENU ----
-        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
-
-        // ---- SCROLL REVEAL (Shared) ----
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+                const el = document.getElementById(sectionId);
+                if(el) {
+                    const offset = 80;
+                    const bodyRect = document.body.getBoundingClientRect().top;
+                    const elementRect = el.getBoundingClientRect().top;
+                    const elementPosition = elementRect - bodyRect;
+                    const offsetPosition = elementPosition - offset;
+                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                 }
-            });
-        }, { threshold: 0.12 });
-
-        document.querySelectorAll('.matte-card, .gallery-item, .cake-card, .dessert-card').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(24px)';
-            el.style.transition = 'opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1)';
-            observer.observe(el);
-        });
-
-        // ---- SPA NAVIGATION LOGIC ----
-        function navTo(viewId, sectionId = null) {
-            // Hide all views
-            document.querySelectorAll('.page-view').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.page-view').forEach(el => el.classList.remove('block'));
-            
-            // Show target view
-            document.getElementById('view-' + viewId).classList.remove('hidden');
-            document.getElementById('view-' + viewId).classList.add('block');
-
-            // Close mobile menu if open
-            document.getElementById('mobile-menu').classList.add('hidden');
-
-            if (sectionId) {
-                // Wait a tiny bit for display block to register before scrolling
-                setTimeout(() => {
-                    const section = document.getElementById(sectionId);
-                    if (section) {
-                        section.scrollIntoView({ behavior: 'smooth' });
-                    }
-                }, 50);
-            } else {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+            }, 80);
+        } else {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+        
+        setTimeout(() => lucide.createIcons(), 100);
+    }
 
-        // ---- NATIVE CAROUSEL SCROLL ----
-        function initCarousel(scrollId, leftBtnId, rightBtnId) {
-            const scrollContainer = document.getElementById(scrollId);
-            const leftBtn  = document.getElementById(leftBtnId);
-            const rightBtn = document.getElementById(rightBtnId);
-            
-            if (!scrollContainer || !leftBtn || !rightBtn) return;
-
-            leftBtn.addEventListener('click', () => {
-                scrollContainer.scrollBy({ left: -340, behavior: 'smooth' });
-            });
-
-            rightBtn.addEventListener('click', () => {
-                scrollContainer.scrollBy({ left: 340, behavior: 'smooth' });
-            });
+    // Handle Browser Back/Forward buttons natively
+    window.addEventListener('popstate', (e) => {
+        if (e.state && e.state.viewId) {
+            navTo(e.state.viewId, e.state.sectionId, false);
+        } else {
+            navTo('home', null, false);
         }
+    });
 
-        document.addEventListener("DOMContentLoaded", function () {
-            // Initialize both carousels with native scroll snapping
-            initCarousel('cake-scroll', 'cake-left', 'cake-right');
-            initCarousel('dessert-scroll', 'dessert-left', 'dessert-right');
-        });
-    </script>
+    // Initialize state on first load
+    if (!history.state) {
+        history.replaceState({ viewId: 'home', sectionId: null }, '', '#home');
+    }
+
+    function scrollToMenu() { 
+        const el = document.getElementById('menu-section');
+        if(el) {
+            const offset = 80;
+            const bodyRect = document.body.getBoundingClientRect().top;
+            const elementRect = el.getBoundingClientRect().top;
+            const elementPosition = elementRect - bodyRect;
+            const offsetPosition = elementPosition - offset;
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        }
+    }
+    
+    window.navTo = navTo;
+    window.scrollToMenu = scrollToMenu;
+</script>
 </body>
 </html>
